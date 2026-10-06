@@ -3,7 +3,7 @@ import { Empty } from "../../components/ui";
 import { addDays, formatDate, relativeDue, todayISO } from "../../lib/dates";
 import { useAuth } from "../auth/AuthContext";
 import { contractAlert } from "../legal/contracts/contractAlerts";
-import { DashboardCard } from "./DashboardCard";
+import { SectionCard } from "../../components/ui";
 
 const ALERT_TEXT = { expired: "expired", renewal_due: "renewal notice due", expiring_soon: "ending soon" } as const;
 
@@ -24,7 +24,7 @@ export function LegalCard() {
   const items = [...dates, ...alerts].slice(0, 8);
 
   return (
-    <DashboardCard title="Legal" link={{ to: can("legal.matters") ? "/legal/matters" : "/legal/contracts", label: "Open" }}>
+    <SectionCard title="Legal" link={{ to: can("legal.matters") ? "/legal/matters" : "/legal/contracts", label: "Open" }}>
       {items.length === 0 ? (
         <Empty title="Nothing due in the next two weeks" />
       ) : (
@@ -39,6 +39,6 @@ export function LegalCard() {
           ))}
         </ul>
       )}
-    </DashboardCard>
+    </SectionCard>
   );
 }

@@ -19,3 +19,5 @@ export const HrRequestsPage = lazy(() => import("../features/hr/requests/HrReque
 export const LegalRequestsPage = lazy(() => import("../features/legal/requests/LegalRequestsPage").then((m) => ({ default: m.LegalRequestsPage })));
 export const ContractsPage = lazy(() => import("../features/legal/contracts/ContractsPage").then((m) => ({ default: m.ContractsPage })));
 export const MattersPage = lazy(() => import("../features/legal/matters/MattersPage").then((m) => ({ default: m.MattersPage })));
+export const MeetingsPage = lazy(() => import("../features/company/meetings/MeetingsPage").then((m) => ({ default: m.MeetingsPage })));
+export const MeetingPage = lazy(() => import("../features/company/meetings/detail/MeetingPage").then((m) => ({ default: m.MeetingPage })));

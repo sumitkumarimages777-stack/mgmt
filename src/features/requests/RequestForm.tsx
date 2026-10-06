@@ -2,7 +2,6 @@ import { useState } from "react";
 import { keys, saveRequest, useFilings, useWrite, type RequestInput } from "../../api";
 import { ErrorBox, Modal, SelectField, TextField } from "../../components/ui";
 import { formatDate } from "../../lib/dates";
-import { MODULE_LABEL } from "../../lib/labels";
 import type { DocumentRequest, ModuleKey } from "../../lib/types";
 import { useAuth } from "../auth/AuthContext";
 import { RequestRouteFields } from "./RequestRouteFields";
@@ -16,7 +15,7 @@ interface Props {
 
 export function RequestForm({ request, module, onClose }: Props) {
   const { can, permissions } = useAuth();
-  const firstTarget = (Object.keys(MODULE_LABEL) as ModuleKey[]).find((m) => permissions.has(`${m}.requests`)) ?? "ca";
+  const firstTarget = (["ca", "hr", "legal"] as ModuleKey[]).find((m) => permissions.has(`${m}.requests`)) ?? "ca";
   const [form, setForm] = useState<RequestInput>({
     module: request?.module ?? module ?? firstTarget,
     from_module: request?.from_module ?? null,

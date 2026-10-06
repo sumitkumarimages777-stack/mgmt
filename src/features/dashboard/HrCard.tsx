@@ -3,7 +3,7 @@ import { useAssignments, useEmployees } from "../../api";
 import { Empty } from "../../components/ui";
 import { formatDate, todayISO } from "../../lib/dates";
 import { useAuth } from "../auth/AuthContext";
-import { DashboardCard } from "./DashboardCard";
+import { SectionCard } from "../../components/ui";
 
 /** HR at a glance for HR staff; a link to "my record" for everyone else with own access. */
 export function HrCard() {
@@ -15,13 +15,13 @@ export function HrCard() {
   if (!can("hr.team", "view")) {
     const mine = all.find((e) => e.profile_id === profile?.id);
     return (
-      <DashboardCard title="My HR record">
+      <SectionCard title="My HR record">
         {mine ? (
           <div className="card-pad"><Link to={`/hr/team/${mine.id}`}>Open my details, documents, equipment and ESOPs →</Link></div>
         ) : (
           <Empty title="Not linked yet">Ask HR to link your HR record to your login.</Empty>
         )}
-      </DashboardCard>
+      </SectionCard>
     );
   }
 
@@ -36,7 +36,7 @@ export function HrCard() {
   if (can("hr.equipment")) rows.push(["Equipment with people", (assignments.data ?? []).filter((a) => !a.returned_on).length]);
 
   return (
-    <DashboardCard title="HR" link={{ to: "/hr/team", label: "Team" }}>
+    <SectionCard title="HR" link={{ to: "/hr/team", label: "Team" }}>
       <ul className="list">
         {rows.map(([label, n]) => (
           <li key={label} className="list-item">
@@ -51,6 +51,6 @@ export function HrCard() {
           </li>
         ))}
       </ul>
-    </DashboardCard>
+    </SectionCard>
   );
 }

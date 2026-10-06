@@ -19,7 +19,7 @@ export interface NavSection {
   items: NavItem[];
 }
 
-/** Left menu, one section per department. Company Meetings comes in a later phase. */
+/** Left menu, one section per department. */
 export const NAV_SECTIONS: NavSection[] = [
   {
     module: "ca",
@@ -49,5 +49,10 @@ export const NAV_SECTIONS: NavSection[] = [
       { to: "/legal/contracts", icon: "file", label: "Contracts & agreements", perm: "legal.contracts" },
       { to: "/legal/matters", icon: "scale", label: "Notices & matters", perm: "legal.matters" },
     ],
+  },
+  {
+    module: "company",
+    label: MODULE_LABEL.company,
+    items: [{ to: "/company/meetings", icon: "calendar", label: "Meetings", perm: "company.meetings" }],
   },
 ];

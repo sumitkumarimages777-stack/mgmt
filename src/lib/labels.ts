@@ -4,6 +4,7 @@ export const MODULE_LABEL: Record<ModuleKey, string> = {
   ca: "CA & Compliance",
   hr: "HR",
   legal: "Legal",
+  company: "Company",
 };
 
 export const ACCESS_LABEL: Record<AccessLevel, string> = {

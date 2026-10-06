@@ -24,6 +24,7 @@ export interface DocumentUpload {
   employee_id?: string | null;
   contract_id?: string | null;
   matter_id?: string | null;
+  meeting_id?: string | null;
   file?: File | null;
   external_url?: string | null;
 }
@@ -57,6 +58,7 @@ export async function uploadDocument(input: DocumentUpload, userId: string) {
     employee_id: input.employee_id || null,
     contract_id: input.contract_id || null,
     matter_id: input.matter_id || null,
+    meeting_id: input.meeting_id || null,
     external_url: input.external_url || null,
     storage_path,
     file_name: input.file?.name ?? null,

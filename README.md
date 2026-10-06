@@ -7,10 +7,11 @@ One place to run company compliance with your CA, lawyer and team:
 - **Shared documents**: every file or link shared, by whom and when, kept in private storage.
 - **HR**: team members with full details, salary history and payroll details, contracts and documents, equipment given to each person (with handover history), and ESOP grants with automatic vesting (cliff, monthly/quarterly/yearly, stops at exit).
 - **Legal**: contract register with end dates and renewal-notice reminders, notices & matters (disputes, IP, regulatory) with the next date to act on, and legal requests.
+- **Company meetings**: board meetings, AGMs and EGMs with notice date, attendance, agenda and minutes (with signed copy), resolutions and action items. An AGM sets the AOC-4 / MGT-7 due dates in Filings, and a resolution that needs filing creates its MGT-14.
 - **Requests between departments**: anyone can ask HR, Legal or the CA for something (e.g. HR asks Legal for a new joiner's contract) and follow it — files, discussion and status — even without access to that department's other work.
 - **Activity log**: an automatic audit trail of who did what.
 - **Roles & permissions**: create roles by name ("CA", "CA Assistant", "Lawyer", "HR Intern") and set each feature to *None / Own only / View / Edit / Manage*. A person can hold several roles and gets the highest level any of them gives.
-- **Department menu**: the left menu is grouped by department (CA & Compliance, HR and Legal; Company Meetings next) and only shows what the person's roles allow.
+- **Department menu**: the left menu is grouped by department (CA & Compliance, HR, Legal and Company) and only shows what the person's roles allow.
 
 Stack: React + TypeScript (Vite) frontend, Supabase backend (Postgres + Row Level Security, Storage, Edge Function).
 
@@ -33,7 +34,7 @@ Deactivating a person blocks their sign-in and all data access immediately.
 ## First-time setup
 
 1. Open the deployed app and click **"First time? Set up the admin account"**. This works only once: after an admin exists the option disappears.
-2. Check **Admin → Roles & permissions**: starter roles *CA*, *CA Assistant*, *HR Manager*, *HR Intern*, *Employee* and *Lawyer* are there. Adjust them or add your own.
+2. Check **Admin → Roles & permissions**: starter roles *CA*, *CA Assistant*, *HR Manager*, *HR Intern*, *Employee*, *Lawyer*, *Director* and *Company Secretary* are there. Adjust them or add your own.
 3. Go to **Admin → People → Add person** to create logins for your CA, lawyer or team. Tick their roles, then send them the temporary password shown. They can change it under *My account*.
 4. Go to **CA & Compliance → Filings → Generate compliance calendar**, pick the financial year and the filings that apply to you.
 5. Add your team under **HR → Team members**. To let someone see their own record, give them a login with the *Employee* role and pick that login in their HR record ("Panel login").

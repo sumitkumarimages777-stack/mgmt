@@ -25,7 +25,7 @@ Supabase project: `hietxqbfpjbbavupspvd` (Mumbai).
   (`role_permissions`): `own` < `view` < `edit` < `manage`. Effective access = highest level across roles.
   The built-in **Admin** role (`is_superuser`) has everything, including People and Roles pages.
 - Permission keys are `<module>.<feature>` (e.g. `ca.filings`) and live in the `permissions` table, grouped by
-  module (`ca`, `hr`, `legal`). `supports_own` marks features where "own records only" applies (HR).
+  module (`ca`, `hr`, `legal`, `company`). `supports_own` marks features where "own records only" applies (HR).
 - RLS uses `has_perm(key, level)`; the UI uses `can(key, level)` from `useAuth()`.
 - **Adding a feature:** insert its key into `permissions` (migration), protect its tables with `has_perm`, add a
   `NAV_SECTIONS` entry in `src/app/navigation.ts`, and a route wrapped in `RequirePerm`.
@@ -43,7 +43,7 @@ src/
   main.tsx              entry: providers + router
   app/                  App (routes), Layout, Sidebar, navigation.ts (department menu), RequirePerm, lazy pages
   api/                  data layer: queries + writes per table, useWrite, adminUsers (Edge Function)
-  components/ui/        Modal, Tabs, Icon, badges, Tag, TextField/SelectField, ErrorBox/Empty/Loading
+  components/ui/        Modal, Tabs, Icon, badges, Tag, SectionCard, TextField/SelectField, ErrorBox/Empty/Loading
   features/
     auth/               AuthContext (useAuth, can), AuthProvider, LoginPage
     dashboard/          page + one file per card + useDashboardStats
@@ -59,13 +59,15 @@ src/
     legal/contracts/    contract register, expiry / renewal alerts (contractAlerts.ts + tests)
     legal/matters/      notices, disputes, IP and regulatory matters with next dates
     legal/requests/     Legal requests page (shared requests board)
+    company/meetings/   meetings list + form; detail/ page with summary, agenda & minutes, attendance, resolutions
+                        (MGT-14 link), action items, AGM → AOC-4 / MGT-7 dates (meetingRules.ts + tests)
     requests/           shared requests board, table, modal, form (To / On behalf of), AllRequestsPage
     documents/          shared document table/row + upload modal (used by every module)
     comments/           comment thread used by filings and requests
     activity/  account/
     admin/people/       people table, add/edit modals, role picker, password reset
     admin/roles/        roles list, role modal, permission grid
-  lib/                  supabase client, types (+ hrTypes, legalTypes), labels, options, access levels, dates, format
+  lib/                  supabase client, types (+ hrTypes, legalTypes, meetingTypes), labels, options, access levels, dates, format
   styles/               CSS split by concern
 supabase/
   migrations/           append-only; file names match the versions recorded in Supabase

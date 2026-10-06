@@ -5,8 +5,8 @@ import { LoginPage } from "../features/auth/LoginPage";
 import { Layout } from "./Layout";
 import {
   AccountPage, ActivityPage, AllRequestsPage, ContractsPage, DashboardPage, EmployeePage, EquipmentPage, EsopPage,
-  FilingsPage, HrDocumentsPage, HrRequestsPage, LegalRequestsPage, MattersPage, PeoplePage, RecordsPage, RequestsPage,
-  RolesPage, TeamPage,
+  FilingsPage, HrDocumentsPage, HrRequestsPage, LegalRequestsPage, MattersPage, MeetingPage, MeetingsPage, PeoplePage,
+  RecordsPage, RequestsPage, RolesPage, TeamPage,
 } from "./pages";
 import { RequirePerm } from "./RequirePerm";
 
@@ -52,6 +52,8 @@ export function App() {
         <Route path="legal/requests" element={<RequirePerm perm="legal.requests"><LegalRequestsPage /></RequirePerm>} />
         <Route path="legal/contracts" element={<RequirePerm perm="legal.contracts"><ContractsPage /></RequirePerm>} />
         <Route path="legal/matters" element={<RequirePerm perm="legal.matters"><MattersPage /></RequirePerm>} />
+        <Route path="company/meetings" element={<RequirePerm perm="company.meetings"><MeetingsPage /></RequirePerm>} />
+        <Route path="company/meetings/:id" element={<RequirePerm perm="company.meetings"><MeetingPage /></RequirePerm>} />
         <Route path="requests" element={<AllRequestsPage />} />
         <Route path="activity" element={<ActivityPage />} />
         <Route path="account" element={<AccountPage />} />

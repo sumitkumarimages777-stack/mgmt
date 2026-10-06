@@ -8,6 +8,7 @@ import { ActivityCard } from "./ActivityCard";
 import { AttentionCard } from "./AttentionCard";
 import { HrCard } from "./HrCard";
 import { LegalCard } from "./LegalCard";
+import { MeetingsCard } from "./MeetingsCard";
 import { RecordsCard } from "./RecordsCard";
 import { RequestsCard } from "./RequestsCard";
 import { StatCards } from "./StatCards";
@@ -48,6 +49,7 @@ export function DashboardPage() {
         {can("ca.documents") && <RecordsCard />}
         {can("hr.team", "own") && <HrCard />}
         {(can("legal.contracts") || can("legal.matters")) && <LegalCard />}
+        {can("company.meetings") && <MeetingsCard />}
         <ActivityCard />
       </div>
       {openFiling && <FilingModal filingId={openFiling} onClose={() => setOpenFiling(null)} />}

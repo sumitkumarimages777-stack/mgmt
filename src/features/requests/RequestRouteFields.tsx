@@ -3,7 +3,8 @@ import { MODULE_LABEL } from "../../lib/labels";
 import type { ModuleKey } from "../../lib/types";
 import { useAuth } from "../auth/AuthContext";
 
-const MODULES = Object.keys(MODULE_LABEL) as ModuleKey[];
+// Departments that take requests.
+const MODULES: ModuleKey[] = ["ca", "hr", "legal"];
 
 interface Props {
   to: ModuleKey;

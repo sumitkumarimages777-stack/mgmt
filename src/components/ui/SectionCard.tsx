@@ -1,7 +1,8 @@
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 
-export function DashboardCard({ title, link, aside, children }: {
+/** Card with a title row, an optional "→" link or extra content on the right, and a body. */
+export function SectionCard({ title, link, aside, children }: {
   title: string;
   link?: { to: string; label: string };
   aside?: ReactNode;

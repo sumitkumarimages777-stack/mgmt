@@ -1,4 +1,4 @@
-export type ModuleKey = "ca" | "hr" | "legal";
+export type ModuleKey = "ca" | "hr" | "legal" | "company";
 export type AccessLevel = "own" | "view" | "edit" | "manage";
 export type FilingStatus = "pending" | "in_progress" | "filed" | "not_applicable";
 export type RequestStatus = "open" | "submitted" | "accepted" | "rejected" | "cancelled";
@@ -93,6 +93,7 @@ export interface SharedDocument {
   employee_id: string | null;
   contract_id: string | null;
   matter_id: string | null;
+  meeting_id: string | null;
   uploaded_by: string | null;
   created_at: string;
 }
@@ -120,3 +121,4 @@ export interface Activity {
 
 export * from "./hrTypes";
 export * from "./legalTypes";
+export * from "./meetingTypes";
