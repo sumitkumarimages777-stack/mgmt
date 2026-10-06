@@ -5,9 +5,10 @@ One place to run company compliance with your CA, lawyer and team:
 - **Filings**: upcoming, overdue and completed statutory filings (GST, TDS, ITR, ROC, PF/ESI…), with filed date, acknowledgement number and attached proof. One click generates a full financial year's compliance calendar.
 - **Document requests**: what the CA or lawyer has asked for, when it's needed, and whether it has been sent, accepted or needs re-uploading.
 - **Shared documents**: every file or link shared, by whom and when, kept in private storage.
+- **HR**: team members with full details, salary history and payroll details, contracts and documents, equipment given to each person (with handover history), and ESOP grants with automatic vesting (cliff, monthly/quarterly/yearly, stops at exit).
 - **Activity log**: an automatic audit trail of who did what.
 - **Roles & permissions**: create roles by name ("CA", "CA Assistant", "Lawyer", "HR Intern") and set each feature to *None / Own only / View / Edit / Manage*. A person can hold several roles and gets the highest level any of them gives.
-- **Department menu**: the left menu is grouped by department (CA & Compliance now; HR and Legal next) and only shows what the person's roles allow.
+- **Department menu**: the left menu is grouped by department (CA & Compliance and HR now; Legal and Company Meetings next) and only shows what the person's roles allow.
 
 Stack: React + TypeScript (Vite) frontend, Supabase backend (Postgres + Row Level Security, Storage, Edge Function).
 
@@ -30,9 +31,10 @@ Deactivating a person blocks their sign-in and all data access immediately.
 ## First-time setup
 
 1. Open the deployed app and click **"First time? Set up the admin account"**. This works only once: after an admin exists the option disappears.
-2. Check **Admin → Roles & permissions**: starter roles *CA* and *CA Assistant* are there. Adjust them or add your own.
+2. Check **Admin → Roles & permissions**: starter roles *CA*, *CA Assistant*, *HR Manager*, *HR Intern* and *Employee* are there. Adjust them or add your own.
 3. Go to **Admin → People → Add person** to create logins for your CA, lawyer or team. Tick their roles, then send them the temporary password shown. They can change it under *My account*.
 4. Go to **CA & Compliance → Filings → Generate compliance calendar**, pick the financial year and the filings that apply to you.
+5. Add your team under **HR → Team members**. To let someone see their own record, give them a login with the *Employee* role and pick that login in their HR record ("Panel login").
 
 Recommended in the Supabase dashboard: **Authentication → Sign In / Providers → turn off "Allow new users to sign up"**. People are only ever added by the admin. Anyone who signs up on their own gets no access anyway, but turning it off is tidier.
 

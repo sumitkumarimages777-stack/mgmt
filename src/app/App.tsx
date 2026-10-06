@@ -4,7 +4,8 @@ import { useAuth } from "../features/auth/AuthContext";
 import { LoginPage } from "../features/auth/LoginPage";
 import { Layout } from "./Layout";
 import {
-  AccountPage, ActivityPage, DashboardPage, FilingsPage, PeoplePage, RecordsPage, RequestsPage, RolesPage,
+  AccountPage, ActivityPage, DashboardPage, EmployeePage, EquipmentPage, EsopPage, FilingsPage, HrDocumentsPage,
+  PeoplePage, RecordsPage, RequestsPage, RolesPage, TeamPage,
 } from "./pages";
 import { RequirePerm } from "./RequirePerm";
 
@@ -42,6 +43,11 @@ export function App() {
         <Route path="ca/filings" element={<RequirePerm perm="ca.filings"><FilingsPage /></RequirePerm>} />
         <Route path="ca/requests" element={<RequirePerm perm="ca.requests"><RequestsPage /></RequirePerm>} />
         <Route path="ca/records" element={<RequirePerm perm="ca.documents"><RecordsPage /></RequirePerm>} />
+        <Route path="hr/team" element={<RequirePerm perm="hr.team" min="own"><TeamPage /></RequirePerm>} />
+        <Route path="hr/team/:id" element={<RequirePerm perm="hr.team" min="own"><EmployeePage /></RequirePerm>} />
+        <Route path="hr/documents" element={<RequirePerm perm="hr.documents"><HrDocumentsPage /></RequirePerm>} />
+        <Route path="hr/equipment" element={<RequirePerm perm="hr.equipment"><EquipmentPage /></RequirePerm>} />
+        <Route path="hr/esop" element={<RequirePerm perm="hr.esop"><EsopPage /></RequirePerm>} />
         <Route path="activity" element={<ActivityPage />} />
         <Route path="account" element={<AccountPage />} />
         <Route path="admin/people" element={<RequirePerm perm="admin"><PeoplePage /></RequirePerm>} />

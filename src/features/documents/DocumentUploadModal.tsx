@@ -9,10 +9,12 @@ interface Props {
   onClose: () => void;
   /** Where the document belongs (module + feature) and what it is attached to. */
   defaults: Pick<DocumentUpload, "module" | "feature"> & Partial<DocumentUpload>;
+  /** Category choices; defaults to the general document categories. */
+  categories?: string[];
 }
 
 /** Upload a file or share a link into one module/feature (e.g. CA → Records). */
-export function DocumentUploadModal({ onClose, defaults }: Props) {
+export function DocumentUploadModal({ onClose, defaults, categories = DOCUMENT_CATEGORIES }: Props) {
   const { profile } = useAuth();
   const [mode, setMode] = useState<SourceMode>("file");
   const [form, setForm] = useState<DocumentUpload>({
@@ -23,6 +25,7 @@ export function DocumentUploadModal({ onClose, defaults }: Props) {
     description: "",
     request_id: defaults.request_id ?? null,
     filing_id: defaults.filing_id ?? null,
+    employee_id: defaults.employee_id ?? null,
     file: null,
     external_url: "",
   });
@@ -72,7 +75,7 @@ export function DocumentUploadModal({ onClose, defaults }: Props) {
           <span>Category</span>
           <select className="select" value={form.category ?? ""} onChange={(e) => set("category", e.target.value)}>
             <option value="">—</option>
-            {DOCUMENT_CATEGORIES.map((c) => <option key={c}>{c}</option>)}
+            {categories.map((c) => <option key={c}>{c}</option>)}
           </select>
         </label>
         <label className="field">

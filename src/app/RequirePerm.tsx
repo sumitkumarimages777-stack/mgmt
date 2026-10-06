@@ -2,10 +2,10 @@ import type { ReactNode } from "react";
 import { Empty } from "../components/ui";
 import { useAuth } from "../features/auth/AuthContext";
 
-/** Shows the page only if the user has `perm` (or is admin when perm is "admin"). */
-export function RequirePerm({ perm, children }: { perm: string; children: ReactNode }) {
+/** Shows the page only if the user has `perm` at `min` level (or is admin when perm is "admin"). */
+export function RequirePerm({ perm, min = "view", children }: { perm: string; min?: "own" | "view"; children: ReactNode }) {
   const { can, isAdmin } = useAuth();
-  const allowed = perm === "admin" ? isAdmin : can(perm);
+  const allowed = perm === "admin" ? isAdmin : can(perm, min);
   if (allowed) return <>{children}</>;
   return (
     <div className="page">

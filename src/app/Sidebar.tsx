@@ -27,7 +27,7 @@ export function Sidebar({ open }: { open: boolean }) {
       </div>
       <NavItem to="/" icon="home" label="Dashboard" />
       {NAV_SECTIONS.map((section) => {
-        const items = section.items.filter((i) => can(i.perm));
+        const items = section.items.filter((i) => can(i.perm, i.min ?? "view"));
         if (items.length === 0) return null;
         return (
           <div key={section.module}>

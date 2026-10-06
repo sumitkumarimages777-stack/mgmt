@@ -26,7 +26,7 @@
 .field > span { font-weight: 550; font-size: 13px; }
 .field small { color: var(--faint); }
 .form { display: grid; gap: 14px; }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: start; }
 @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
 .check { display: flex; align-items: center; gap: 8px; cursor: pointer; }
 .check input { width: 16px; height: 16px; accent-color: var(--primary); }

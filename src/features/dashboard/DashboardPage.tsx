@@ -6,6 +6,7 @@ import { FilingModal } from "../ca/filings/FilingModal";
 import { RequestModal } from "../ca/requests/RequestModal";
 import { ActivityCard } from "./ActivityCard";
 import { AttentionCard } from "./AttentionCard";
+import { HrCard } from "./HrCard";
 import { RecordsCard } from "./RecordsCard";
 import { RequestsCard } from "./RequestsCard";
 import { StatCards } from "./StatCards";
@@ -23,7 +24,7 @@ export function DashboardPage() {
       <div className="page">
         <div className="card">
           <Empty title="Your access hasn't been set up yet">
-            Ask the admin to give you a role (for example CA, Lawyer or HR).
+            Ask the admin to give you a role (for example CA, HR Manager or Employee).
           </Empty>
         </div>
       </div>
@@ -44,6 +45,7 @@ export function DashboardPage() {
         {can("ca.filings") && <AttentionCard stats={stats} canEdit={can("ca.filings", "edit")} onOpen={setOpenFiling} />}
         {can("ca.requests") && <RequestsCard stats={stats} onOpen={setOpenRequest} />}
         {can("ca.documents") && <RecordsCard />}
+        {can("hr.team", "own") && <HrCard />}
         <ActivityCard />
       </div>
       {openFiling && <FilingModal filingId={openFiling} onClose={() => setOpenFiling(null)} />}

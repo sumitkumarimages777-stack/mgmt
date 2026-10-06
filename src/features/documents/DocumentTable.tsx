@@ -1,11 +1,17 @@
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { useLookups } from "../../api";
 import { ErrorBox } from "../../components/ui";
 import type { SharedDocument } from "../../lib/types";
 import { DocumentRow } from "./DocumentRow";
 
+/** An extra column, e.g. the team member an HR document belongs to. */
+export interface ExtraColumn {
+  header: string;
+  render: (doc: SharedDocument) => ReactNode;
+}
+
 /** `showSource` adds a column saying whether a file came in for a request, a filing, or as a record. */
-export function DocumentTable({ docs, showSource = true }: { docs: SharedDocument[]; showSource?: boolean }) {
+export function DocumentTable({ docs, showSource = true, extra }: { docs: SharedDocument[]; showSource?: boolean; extra?: ExtraColumn }) {
   const lookups = useLookups();
   const [error, setError] = useState<unknown>(null);
 
@@ -18,6 +24,7 @@ export function DocumentTable({ docs, showSource = true }: { docs: SharedDocumen
           <thead>
             <tr>
               <th>Document</th>
+              {extra && <th>{extra.header}</th>}
               {showSource && <th>For</th>}
               <th>Shared by</th>
               <th>Date</th>
@@ -26,7 +33,7 @@ export function DocumentTable({ docs, showSource = true }: { docs: SharedDocumen
           </thead>
           <tbody>
             {docs.map((d) => (
-              <DocumentRow key={d.id} doc={d} showSource={showSource} lookups={lookups} onError={setError} />
+              <DocumentRow key={d.id} doc={d} showSource={showSource} extra={extra} lookups={lookups} onError={setError} />
             ))}
           </tbody>
         </table>

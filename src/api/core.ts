@@ -18,6 +18,12 @@ export const keys = {
   requests: ["requests"] as const,
   documents: ["documents"] as const,
   activity: ["activity"] as const,
+  employees: ["employees"] as const,
+  assets: ["assets"] as const,
+  assignments: ["asset_assignments"] as const,
+  esop: ["esop_grants"] as const,
+  payroll: (employeeId: string) => ["payroll", employeeId] as const,
+  salaries: (employeeId: string) => ["salaries", employeeId] as const,
   comments: (kind: CommentParent, id: string) => ["comments", kind, id] as const,
 };
 
