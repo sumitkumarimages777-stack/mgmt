@@ -1,0 +1,19 @@
+/* Detail views: key/value lists, comments, auth screen, access grid. */
+.meta { display: grid; grid-template-columns: 140px 1fr; gap: 8px 14px; margin: 0; }
+.meta dt { color: var(--muted); }
+.meta dd { margin: 0; }
+.comment { padding: 10px 0; border-bottom: 1px solid var(--border); }
+.comment:last-child { border-bottom: 0; }
+.comment-head { display: flex; gap: 8px; align-items: baseline; font-size: 13px; }
+
+.auth-wrap { min-height: 100vh; display: grid; place-items: center; padding: 16px; }
+.auth-card { width: min(400px, 100%); padding: 28px; }
+.auth-card h1 { margin-bottom: 4px; }
+
+.spinner { display: grid; place-items: center; min-height: 40vh; color: var(--muted); }
+
+.access-grid td, .access-grid th { padding: 8px 10px; }
+.seg { display: inline-flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.seg button { border: 0; background: var(--surface); padding: 5px 10px; cursor: pointer; font-size: 13px; color: var(--muted); }
+.seg button + button { border-left: 1px solid var(--border); }
+.seg button.on { background: var(--primary-soft); color: var(--primary); font-weight: 600; }

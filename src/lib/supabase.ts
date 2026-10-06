@@ -9,18 +9,3 @@ const key = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || "sb_publishable_6AJ
 export const supabase = createClient(url, key);
 
 export const DOCUMENTS_BUCKET = "documents";
-
-/** Call the admin-users Edge Function and surface its error message. */
-export async function adminUsers<T = { ok: true }>(body: Record<string, unknown>): Promise<T> {
-  const { data, error } = await supabase.functions.invoke("admin-users", { body });
-  if (error) {
-    // FunctionsHttpError keeps the response; pull our { error } message out of it.
-    const ctx = (error as { context?: Response }).context;
-    if (ctx && typeof ctx.json === "function") {
-      const payload = await ctx.json().catch(() => null);
-      if (payload?.error) throw new Error(payload.error);
-    }
-    throw error;
-  }
-  return data as T;
-}

@@ -45,13 +45,19 @@ The app talks to the Supabase project `hietxqbfpjbbavupspvd` by default. To poin
 
 Import the repo in Vercel. It auto-detects Vite: build `npm run build`, output `dist`. `vercel.json` already handles page refreshes on deep links.
 
-## Backend layout
+## Code structure
+
+Feature-based and kept small: no file over 150 lines (enforced by `npm run lint`). See [`CLAUDE.md`](CLAUDE.md)
+for the full layout and conventions.
 
 ```
-supabase/
-  migrations/                 schema, RLS policies, triggers, storage bucket (already applied)
-  functions/admin-users/      Edge Function: first-admin setup, create login, reset password, deactivate
-  config.toml
+src/app/          routes, layout, sidebar
+src/api/          all database access, one file per table/topic
+src/features/     one folder per screen (filings, requests, documents, dashboard, admin, …)
+src/components/ui shared building blocks (modal, tabs, badges, icons)
+src/lib/          types, labels, date + format helpers, Supabase client
+src/styles/       CSS split by concern
+supabase/         migrations (already applied) and the admin-users Edge Function
 ```
 
 To add a new kind of work later (e.g. "Trademark & IP"), create an **Area** in the admin and grant people access. No code change is needed.
