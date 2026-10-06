@@ -1,10 +1,10 @@
-import { Icon } from "../../../components/ui";
-import type { DocumentRequest, RequestStatus } from "../../../lib/types";
+import { Icon } from "../../components/ui";
+import type { DocumentRequest, RequestStatus } from "../../lib/types";
 
 interface Props {
   request: DocumentRequest;
   editable: boolean;
-  /** Has "manage", or is the person who asked (and can still edit requests). */
+  /** Has "manage" on the handling department, or is the person who asked. */
   isOwner: boolean;
   onStatus: (s: RequestStatus) => void;
   onDelete: () => void;
@@ -27,13 +27,13 @@ export function RequestFooter({ request: r, editable, isOwner, onStatus, onDelet
       {editable && <button className="btn" onClick={onEdit}>Edit</button>}
       {editable && r.status === "submitted" && (
         <>
-          <button className="btn" onClick={onReject}>Ask to re-upload</button>
+          <button className="btn" onClick={onReject}>Ask for changes</button>
           <button className="btn btn-primary" onClick={() => onStatus("accepted")}>Accept</button>
         </>
       )}
       {editable && isOpen && (
         <button className="btn btn-primary" onClick={onUpload}>
-          <Icon name="plus" size={16} /> Upload document
+          <Icon name="plus" size={16} /> Add file
         </button>
       )}
       {editable && isClosed && <button className="btn" onClick={() => onStatus("open")}>Re-open</button>}

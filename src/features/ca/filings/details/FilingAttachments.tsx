@@ -5,7 +5,7 @@ import type { Filing } from "../../../../lib/types";
 import { useAuth } from "../../../auth/AuthContext";
 import { DocumentTable } from "../../../documents/DocumentTable";
 import { DocumentUploadModal } from "../../../documents/DocumentUploadModal";
-import { RequestModal } from "../../requests/RequestModal";
+import { RequestModal } from "../../../requests/RequestModal";
 
 /** Documents attached to a filing and document requests linked to it. */
 export function FilingAttachments({ filing, editable }: { filing: Filing; editable: boolean }) {

@@ -8,6 +8,7 @@ export * from "./documents";
 export * from "./employees";
 export * from "./esop";
 export * from "./filings";
+export * from "./legal";
 export * from "./lookups";
 export * from "./profiles";
 export * from "./requests";

@@ -1,5 +1,5 @@
-import { addComment, deleteRequest, keys, saveRequest, useWrite } from "../../../api";
-import type { RequestStatus } from "../../../lib/types";
+import { addComment, deleteRequest, keys, saveRequest, useWrite } from "../../api";
+import type { RequestStatus } from "../../lib/types";
 
 /** Status changes (optionally with an explanatory comment) and delete for one request. */
 export function useRequestActions(requestId: string) {

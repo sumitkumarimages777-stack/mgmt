@@ -16,7 +16,8 @@ function NavItem({ to, icon, label, count }: { to: string; icon: IconName; label
 }
 
 export function Sidebar({ open }: { open: boolean }) {
-  const { isAdmin, can } = useAuth();
+  const { isAdmin, can, permissions } = useAuth();
+  const canRequest = [...permissions.keys()].some((k) => k.endsWith(".requests"));
   const badges = useNavBadges();
 
   return (
@@ -39,6 +40,7 @@ export function Sidebar({ open }: { open: boolean }) {
         );
       })}
       <div className="nav-section">General</div>
+      {canRequest && <NavItem to="/requests" icon="inbox" label="Requests" />}
       <NavItem to="/activity" icon="activity" label="Activity" />
       {isAdmin && (
         <>

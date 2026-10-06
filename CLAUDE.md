@@ -30,6 +30,9 @@ Supabase project: `hietxqbfpjbbavupspvd` (Mumbai).
 - **Adding a feature:** insert its key into `permissions` (migration), protect its tables with `has_perm`, add a
   `NAV_SECTIONS` entry in `src/app/navigation.ts`, and a route wrapped in `RequirePerm`.
 - Documents carry `module` + `feature`; their `perm_key` decides who sees them. Storage paths are `<module>/<file>`.
+- Requests: `module` = department handling it, `from_module` = department asking. The requester and anyone with
+  edit on `from_module.requests` can follow it, add files and comment (`can_see_request`). Request files are stored
+  under `requests/<request id>/`.
 - "Own only": HR rows link to an employee; `employees.profile_id` ties an employee to a login. RLS helpers
   `is_own_employee(id)` and `can_see_employee_item(key, employee_id)` implement it. HR documents set `employee_id`.
 
@@ -45,19 +48,24 @@ src/
     auth/               AuthContext (useAuth, can), AuthProvider, LoginPage
     dashboard/          page + one file per card + useDashboardStats
     ca/filings/         page, table, form, modal, details/, generate/, compliance calendar logic + tests
-    ca/requests/        page, table, modal, footer actions, form, reject form
+    ca/requests/        CA document requests page (uses the shared requests board)
     ca/records/         CA documents page
     hr/team/            team list + employee form (JobFields, PersonalFields)
     hr/employee/        employee page with tabs: overview, salary & payroll, documents, equipment, ESOPs
     hr/equipment/       asset register, give / return equipment
     hr/esop/            grants, vesting maths (vesting.ts + tests), ESOP overview
     hr/documents/       all HR documents by team member
+    hr/requests/        HR requests page (shared requests board)
+    legal/contracts/    contract register, expiry / renewal alerts (contractAlerts.ts + tests)
+    legal/matters/      notices, disputes, IP and regulatory matters with next dates
+    legal/requests/     Legal requests page (shared requests board)
+    requests/           shared requests board, table, modal, form (To / On behalf of), AllRequestsPage
     documents/          shared document table/row + upload modal (used by every module)
     comments/           comment thread used by filings and requests
     activity/  account/
     admin/people/       people table, add/edit modals, role picker, password reset
     admin/roles/        roles list, role modal, permission grid
-  lib/                  supabase client, types (+ hrTypes), labels, options, access levels, dates, format
+  lib/                  supabase client, types (+ hrTypes, legalTypes), labels, options, access levels, dates, format
   styles/               CSS split by concern
 supabase/
   migrations/           append-only; file names match the versions recorded in Supabase

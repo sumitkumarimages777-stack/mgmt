@@ -22,6 +22,8 @@ export interface DocumentUpload {
   request_id?: string | null;
   filing_id?: string | null;
   employee_id?: string | null;
+  contract_id?: string | null;
+  matter_id?: string | null;
   file?: File | null;
   external_url?: string | null;
 }
@@ -30,11 +32,15 @@ function safeFileName(name: string) {
   return name.normalize("NFKD").replace(/[^\w.-]+/g, "_").slice(-120) || "file";
 }
 
-/** Upload the file (if any) to private storage, then record it. Objects live under "<module>/". */
+/**
+ * Upload the file (if any) to private storage, then record it. Objects live under "<module>/",
+ * or "requests/<request id>/" for request files so the person who asked can attach and open them.
+ */
 export async function uploadDocument(input: DocumentUpload, userId: string) {
   let storage_path: string | null = null;
   if (input.file) {
-    storage_path = `${input.module}/${crypto.randomUUID()}-${safeFileName(input.file.name)}`;
+    const folder = input.request_id ? `requests/${input.request_id}` : input.module;
+    storage_path = `${folder}/${crypto.randomUUID()}-${safeFileName(input.file.name)}`;
     const { error } = await supabase.storage.from(DOCUMENTS_BUCKET).upload(storage_path, input.file, {
       contentType: input.file.type || undefined,
     });
@@ -49,6 +55,8 @@ export async function uploadDocument(input: DocumentUpload, userId: string) {
     request_id: input.request_id || null,
     filing_id: input.filing_id || null,
     employee_id: input.employee_id || null,
+    contract_id: input.contract_id || null,
+    matter_id: input.matter_id || null,
     external_url: input.external_url || null,
     storage_path,
     file_name: input.file?.name ?? null,

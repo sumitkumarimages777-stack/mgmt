@@ -13,7 +13,7 @@ export function useRequests(enabled = true) {
 }
 
 export type RequestInput = Partial<
-  Pick<DocumentRequest, "module" | "title" | "description" | "filing_id" | "due_date" | "status">
+  Pick<DocumentRequest, "module" | "from_module" | "title" | "description" | "filing_id" | "due_date" | "status">
 >;
 
 export async function saveRequest(id: string | null, input: RequestInput) {

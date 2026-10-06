@@ -60,7 +60,10 @@ export interface Filing {
 
 export interface DocumentRequest {
   id: string;
+  /** Department that handles the request. */
   module: ModuleKey;
+  /** Department that asked, if it came from another department. */
+  from_module: ModuleKey | null;
   title: string;
   description: string | null;
   filing_id: string | null;
@@ -88,6 +91,8 @@ export interface SharedDocument {
   request_id: string | null;
   filing_id: string | null;
   employee_id: string | null;
+  contract_id: string | null;
+  matter_id: string | null;
   uploaded_by: string | null;
   created_at: string;
 }
@@ -114,3 +119,4 @@ export interface Activity {
 }
 
 export * from "./hrTypes";
+export * from "./legalTypes";

@@ -1,7 +1,8 @@
-import { useFilings, useLookups } from "../../../api";
-import { RequestBadge } from "../../../components/ui";
-import { formatDate } from "../../../lib/dates";
-import type { DocumentRequest } from "../../../lib/types";
+import { useFilings, useLookups } from "../../api";
+import { RequestBadge } from "../../components/ui";
+import { formatDate } from "../../lib/dates";
+import type { DocumentRequest } from "../../lib/types";
+import { RouteTag } from "./RouteTag";
 
 export function RequestMeta({ request: r }: { request: DocumentRequest }) {
   const { personName } = useLookups();
@@ -12,6 +13,8 @@ export function RequestMeta({ request: r }: { request: DocumentRequest }) {
       <dl className="meta">
         <dt>Status</dt>
         <dd><RequestBadge status={r.status} /></dd>
+        <dt>Department</dt>
+        <dd><RouteTag request={r} long /></dd>
         <dt>Requested by</dt>
         <dd>{personName(r.requested_by)} on {formatDate(r.created_at)}</dd>
         <dt>Needed by</dt>

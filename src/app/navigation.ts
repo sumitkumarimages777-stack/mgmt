@@ -19,7 +19,7 @@ export interface NavSection {
   items: NavItem[];
 }
 
-/** Left menu, one section per department. Legal and Company Meetings come in later phases. */
+/** Left menu, one section per department. Company Meetings comes in a later phase. */
 export const NAV_SECTIONS: NavSection[] = [
   {
     module: "ca",
@@ -38,6 +38,16 @@ export const NAV_SECTIONS: NavSection[] = [
       { to: "/hr/documents", icon: "file", label: "Contracts & documents", perm: "hr.documents" },
       { to: "/hr/equipment", icon: "laptop", label: "Equipment", perm: "hr.equipment" },
       { to: "/hr/esop", icon: "chart", label: "ESOPs", perm: "hr.esop" },
+      { to: "/hr/requests", icon: "inbox", label: "HR requests", perm: "hr.requests" },
+    ],
+  },
+  {
+    module: "legal",
+    label: MODULE_LABEL.legal,
+    items: [
+      { to: "/legal/requests", icon: "inbox", label: "Legal requests", perm: "legal.requests" },
+      { to: "/legal/contracts", icon: "file", label: "Contracts & agreements", perm: "legal.contracts" },
+      { to: "/legal/matters", icon: "scale", label: "Notices & matters", perm: "legal.matters" },
     ],
   },
 ];

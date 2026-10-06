@@ -4,8 +4,9 @@ import { useAuth } from "../features/auth/AuthContext";
 import { LoginPage } from "../features/auth/LoginPage";
 import { Layout } from "./Layout";
 import {
-  AccountPage, ActivityPage, DashboardPage, EmployeePage, EquipmentPage, EsopPage, FilingsPage, HrDocumentsPage,
-  PeoplePage, RecordsPage, RequestsPage, RolesPage, TeamPage,
+  AccountPage, ActivityPage, AllRequestsPage, ContractsPage, DashboardPage, EmployeePage, EquipmentPage, EsopPage,
+  FilingsPage, HrDocumentsPage, HrRequestsPage, LegalRequestsPage, MattersPage, PeoplePage, RecordsPage, RequestsPage,
+  RolesPage, TeamPage,
 } from "./pages";
 import { RequirePerm } from "./RequirePerm";
 
@@ -23,7 +24,6 @@ function Deactivated() {
 /** Links from before the department menu existed. */
 const LEGACY = [
   ["filings", "/ca/filings"],
-  ["requests", "/ca/requests"],
   ["documents", "/ca/records"],
   ["admin/users", "/admin/people"],
   ["admin/areas", "/admin/roles"],
@@ -48,6 +48,11 @@ export function App() {
         <Route path="hr/documents" element={<RequirePerm perm="hr.documents"><HrDocumentsPage /></RequirePerm>} />
         <Route path="hr/equipment" element={<RequirePerm perm="hr.equipment"><EquipmentPage /></RequirePerm>} />
         <Route path="hr/esop" element={<RequirePerm perm="hr.esop"><EsopPage /></RequirePerm>} />
+        <Route path="hr/requests" element={<RequirePerm perm="hr.requests"><HrRequestsPage /></RequirePerm>} />
+        <Route path="legal/requests" element={<RequirePerm perm="legal.requests"><LegalRequestsPage /></RequirePerm>} />
+        <Route path="legal/contracts" element={<RequirePerm perm="legal.contracts"><ContractsPage /></RequirePerm>} />
+        <Route path="legal/matters" element={<RequirePerm perm="legal.matters"><MattersPage /></RequirePerm>} />
+        <Route path="requests" element={<AllRequestsPage />} />
         <Route path="activity" element={<ActivityPage />} />
         <Route path="account" element={<AccountPage />} />
         <Route path="admin/people" element={<RequirePerm perm="admin"><PeoplePage /></RequirePerm>} />
