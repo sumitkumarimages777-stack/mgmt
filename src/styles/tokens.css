@@ -1,0 +1,58 @@
+/* Design tokens: colours, radius, shadows — light and dark. */
+:root {
+  --bg: #f6f7f9;
+  --surface: #ffffff;
+  --surface-2: #f1f3f6;
+  --border: #e3e6eb;
+  --text: #16191f;
+  --muted: #5d6573;
+  --faint: #8a93a3;
+  --primary: #2952e3;
+  --primary-ink: #ffffff;
+  --primary-soft: #e8eeff;
+  --red: #c62f2f;
+  --red-soft: #fdecec;
+  --amber: #a15c00;
+  --amber-soft: #fff3df;
+  --green: #18794e;
+  --green-soft: #e3f5ec;
+  --blue: #1d5fc0;
+  --blue-soft: #e6f0fd;
+  --gray-soft: #eef0f3;
+  --radius: 10px;
+  --shadow: 0 1px 2px rgba(16, 24, 40, 0.06), 0 1px 3px rgba(16, 24, 40, 0.08);
+  --shadow-lg: 0 12px 40px rgba(16, 24, 40, 0.18);
+  color-scheme: light;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--text);
+  background: var(--bg);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f1115;
+    --surface: #171a21;
+    --surface-2: #1e222b;
+    --border: #2a2f3a;
+    --text: #e8eaee;
+    --muted: #a3abb9;
+    --faint: #737c8c;
+    --primary: #6d8cff;
+    --primary-ink: #0b0f1a;
+    --primary-soft: #1d2645;
+    --red: #ff7b7b;
+    --red-soft: #3a1c1f;
+    --amber: #f3b35a;
+    --amber-soft: #352717;
+    --green: #5fd39b;
+    --green-soft: #16301f;
+    --blue: #7fb0ff;
+    --blue-soft: #18263d;
+    --gray-soft: #232833;
+    --shadow: none;
+    --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.5);
+    color-scheme: dark;
+  }
+}
