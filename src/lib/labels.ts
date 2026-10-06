@@ -4,6 +4,7 @@ export const MODULE_LABEL: Record<ModuleKey, string> = {
   ca: "CA & Compliance",
   hr: "HR",
   legal: "Legal",
+  company: "Company",
 };
 
 export const ACCESS_LABEL: Record<AccessLevel, string> = {
@@ -31,10 +32,10 @@ export const FILING_STATUS_LABEL: Record<FilingStatus, string> = {
 };
 
 export const REQUEST_STATUS_LABEL: Record<RequestStatus, string> = {
-  open: "Waiting for us",
-  submitted: "Submitted — to review",
-  accepted: "Accepted",
-  rejected: "Re-upload needed",
+  open: "Open",
+  submitted: "Delivered — to review",
+  accepted: "Done",
+  rejected: "Changes needed",
   cancelled: "Cancelled",
 };
 

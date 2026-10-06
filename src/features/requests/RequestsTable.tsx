@@ -1,11 +1,19 @@
-import { useDocuments, useLookups } from "../../../api";
-import { RequestBadge } from "../../../components/ui";
-import { daysBetween, formatDate, todayISO } from "../../../lib/dates";
-import type { DocumentRequest } from "../../../lib/types";
+import { useDocuments, useLookups } from "../../api";
+import { RequestBadge } from "../../components/ui";
+import { daysBetween, formatDate, todayISO } from "../../lib/dates";
+import type { DocumentRequest } from "../../lib/types";
+import { RouteTag } from "./RouteTag";
 
 const oneLine = { maxWidth: 420, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" } as const;
 
-export function RequestsTable({ rows, onOpen }: { rows: DocumentRequest[]; onOpen: (id: string) => void }) {
+interface Props {
+  rows: DocumentRequest[];
+  /** Show which department asked and which handles it. */
+  showRoute: boolean;
+  onOpen: (id: string) => void;
+}
+
+export function RequestsTable({ rows, showRoute, onOpen }: Props) {
   const documents = useDocuments();
   const { personName, personById } = useLookups();
   const today = todayISO();
@@ -18,8 +26,9 @@ export function RequestsTable({ rows, onOpen }: { rows: DocumentRequest[]; onOpe
       <table>
         <thead>
           <tr>
-            <th>Document</th>
-            <th>Requested by</th>
+            <th>Request</th>
+            {showRoute && <th>From → To</th>}
+            <th>Asked by</th>
             <th>Needed by</th>
             <th>Status</th>
             <th>Files</th>
@@ -32,6 +41,7 @@ export function RequestsTable({ rows, onOpen }: { rows: DocumentRequest[]; onOpe
                 <div className="cell-title">{r.title}</div>
                 {r.description && <div className="cell-sub" style={oneLine}>{r.description}</div>}
               </td>
+              {showRoute && <td><RouteTag request={r} /></td>}
               <td>
                 {personName(r.requested_by)}
                 <div className="cell-sub">

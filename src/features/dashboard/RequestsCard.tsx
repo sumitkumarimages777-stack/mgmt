@@ -1,14 +1,14 @@
 import { useLookups } from "../../api";
 import { Empty, RequestBadge } from "../../components/ui";
 import { formatDate } from "../../lib/dates";
-import { DashboardCard } from "./DashboardCard";
+import { SectionCard } from "../../components/ui";
 import type { DashboardStats } from "./useDashboardStats";
 
 export function RequestsCard({ stats, onOpen }: { stats: DashboardStats; onOpen: (id: string) => void }) {
   const { personName } = useLookups();
   const items = [...stats.pendingOnUs, ...stats.toReview].slice(0, 8);
   return (
-    <DashboardCard title="Document requests" link={{ to: "/ca/requests", label: "All requests" }}>
+    <SectionCard title="Document requests" link={{ to: "/ca/requests", label: "All requests" }}>
       {items.length === 0 ? (
         <Empty title="No open document requests" />
       ) : (
@@ -27,6 +27,6 @@ export function RequestsCard({ stats, onOpen }: { stats: DashboardStats; onOpen:
           ))}
         </ul>
       )}
-    </DashboardCard>
+    </SectionCard>
   );
 }

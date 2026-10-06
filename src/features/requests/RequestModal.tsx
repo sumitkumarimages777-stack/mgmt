@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { useDocuments, useRequests } from "../../../api";
-import { ErrorBox, Loading, Modal } from "../../../components/ui";
-import { useAuth } from "../../auth/AuthContext";
-import { Comments } from "../../comments/Comments";
-import { DocumentTable } from "../../documents/DocumentTable";
-import { DocumentUploadModal } from "../../documents/DocumentUploadModal";
+import { useDocuments, useRequests } from "../../api";
+import { ErrorBox, Loading, Modal } from "../../components/ui";
+import { useAuth } from "../auth/AuthContext";
+import { Comments } from "../comments/Comments";
+import { DocumentTable } from "../documents/DocumentTable";
+import { DocumentUploadModal } from "../documents/DocumentUploadModal";
 import { RejectForm } from "./RejectForm";
 import { RequestFooter } from "./RequestFooter";
 import { RequestForm } from "./RequestForm";
@@ -31,8 +31,10 @@ export function RequestModal({ requestId, onClose }: { requestId: string; onClos
   if (editing) return <RequestForm request={r} onClose={() => setEditing(false)} />;
 
   const key = `${r.module}.requests`;
-  const editable = can(key, "edit");
-  const isOwner = can(key, "manage") || (r.requested_by === profile?.id && editable);
+  const isRequester = r.requested_by === profile?.id;
+  // Handlers, the person who asked, and people who can act for the asking department may work on it.
+  const editable = can(key, "edit") || isRequester || (!!r.from_module && can(`${r.from_module}.requests`, "edit"));
+  const isOwner = can(key, "manage") || isRequester;
   const docs = (documents.data ?? []).filter((d) => d.request_id === r.id);
 
   const footer = (
@@ -58,7 +60,7 @@ export function RequestModal({ requestId, onClose }: { requestId: string; onClos
             onCancel={() => setRejecting(false)}
             onSend={(reason) =>
               setStatus.mutate(
-                { status: "rejected", note: `Re-upload needed: ${reason}` },
+                { status: "rejected", note: `Changes needed: ${reason}` },
                 { onSuccess: () => setRejecting(false) },
               )
             }
@@ -66,7 +68,7 @@ export function RequestModal({ requestId, onClose }: { requestId: string; onClos
         )}
         <ErrorBox error={setStatus.error ?? remove.error} />
 
-        <div className="section-title">Documents sent ({docs.length})</div>
+        <div className="section-title">Files ({docs.length})</div>
         <DocumentTable docs={docs} showSource={false} />
 
         <div className="section-title">Discussion</div>

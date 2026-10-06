@@ -13,7 +13,8 @@ export function useDashboardStats() {
   const in30 = addDays(today, 30);
   const fy = fyStartYear(today);
   const all = filings.data ?? [];
-  const reqs = requests.data ?? [];
+  // CA cards only; other departments' requests have their own pages.
+  const reqs = (requests.data ?? []).filter((r) => r.module === "ca");
 
   const overdue = all.filter((f) => filingDueState(f, today) === "overdue");
   const next30 = all.filter((f) => {

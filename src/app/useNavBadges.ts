@@ -9,6 +9,6 @@ export function useNavBadges() {
   const requests = useRequests(can("ca.requests"));
   return {
     overdueFilings: (filings.data ?? []).filter((f) => filingDueState(f) === "overdue").length,
-    requestsToSend: (requests.data ?? []).filter((r) => r.status === "open" || r.status === "rejected").length,
+    requestsToSend: (requests.data ?? []).filter((r) => r.module === "ca" && (r.status === "open" || r.status === "rejected")).length,
   };
 }

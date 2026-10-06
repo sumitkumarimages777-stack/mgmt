@@ -12,6 +12,7 @@ const PATHS = {
   plus: <path d="M12 5v14M5 12h14" />,
   laptop: <><rect x="4" y="5" width="16" height="11" rx="1.5" /><path d="M2 19h20" /></>,
   chart: <><path d="M4 20V10M10 20V4M16 20v-8M22 20H2" /></>,
+  scale: <><path d="M12 4v16M5 20h14M4 8h16" /><path d="m4 8-2.5 6a3 3 0 0 0 5 0zM20 8l-2.5 6a3 3 0 0 0 5 0z" /></>,
   x: <path d="M6 6l12 12M18 6 6 18" />,
   menu: <path d="M4 7h16M4 12h16M4 17h16" />,
   download: <><path d="M12 4v11M7 10l5 5 5-5" /><path d="M5 20h14" /></>,

@@ -3,10 +3,12 @@ import { Empty, Loading } from "../../components/ui";
 import { formatDate, fyLabel } from "../../lib/dates";
 import { useAuth } from "../auth/AuthContext";
 import { FilingModal } from "../ca/filings/FilingModal";
-import { RequestModal } from "../ca/requests/RequestModal";
+import { RequestModal } from "../requests/RequestModal";
 import { ActivityCard } from "./ActivityCard";
 import { AttentionCard } from "./AttentionCard";
 import { HrCard } from "./HrCard";
+import { LegalCard } from "./LegalCard";
+import { MeetingsCard } from "./MeetingsCard";
 import { RecordsCard } from "./RecordsCard";
 import { RequestsCard } from "./RequestsCard";
 import { StatCards } from "./StatCards";
@@ -24,7 +26,7 @@ export function DashboardPage() {
       <div className="page">
         <div className="card">
           <Empty title="Your access hasn't been set up yet">
-            Ask the admin to give you a role (for example CA, HR Manager or Employee).
+            Ask the admin to give you a role (for example CA, HR Manager, Lawyer or Employee).
           </Empty>
         </div>
       </div>
@@ -46,6 +48,8 @@ export function DashboardPage() {
         {can("ca.requests") && <RequestsCard stats={stats} onOpen={setOpenRequest} />}
         {can("ca.documents") && <RecordsCard />}
         {can("hr.team", "own") && <HrCard />}
+        {(can("legal.contracts") || can("legal.matters")) && <LegalCard />}
+        {can("company.meetings") && <MeetingsCard />}
         <ActivityCard />
       </div>
       {openFiling && <FilingModal filingId={openFiling} onClose={() => setOpenFiling(null)} />}

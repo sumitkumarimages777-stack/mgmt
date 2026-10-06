@@ -2,7 +2,7 @@ import { useActivity, useLookups } from "../../api";
 import { Empty, Tag } from "../../components/ui";
 import { formatDateTime } from "../../lib/dates";
 import { usePermLabel } from "../activity/usePermLabel";
-import { DashboardCard } from "./DashboardCard";
+import { SectionCard } from "../../components/ui";
 
 export function ActivityCard() {
   const activity = useActivity(8);
@@ -10,7 +10,7 @@ export function ActivityCard() {
   const permLabel = usePermLabel();
   const items = activity.data ?? [];
   return (
-    <DashboardCard title="Recent activity" link={{ to: "/activity", label: "Full log" }}>
+    <SectionCard title="Recent activity" link={{ to: "/activity", label: "Full log" }}>
       {items.length === 0 ? (
         <Empty title="No activity yet" />
       ) : (
@@ -26,6 +26,6 @@ export function ActivityCard() {
           ))}
         </ul>
       )}
-    </DashboardCard>
+    </SectionCard>
   );
 }

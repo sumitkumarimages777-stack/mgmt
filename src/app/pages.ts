@@ -14,3 +14,10 @@ export const EmployeePage = lazy(() => import("../features/hr/employee/EmployeeP
 export const HrDocumentsPage = lazy(() => import("../features/hr/documents/HrDocumentsPage").then((m) => ({ default: m.HrDocumentsPage })));
 export const EquipmentPage = lazy(() => import("../features/hr/equipment/EquipmentPage").then((m) => ({ default: m.EquipmentPage })));
 export const EsopPage = lazy(() => import("../features/hr/esop/EsopPage").then((m) => ({ default: m.EsopPage })));
+export const AllRequestsPage = lazy(() => import("../features/requests/AllRequestsPage").then((m) => ({ default: m.AllRequestsPage })));
+export const HrRequestsPage = lazy(() => import("../features/hr/requests/HrRequestsPage").then((m) => ({ default: m.HrRequestsPage })));
+export const LegalRequestsPage = lazy(() => import("../features/legal/requests/LegalRequestsPage").then((m) => ({ default: m.LegalRequestsPage })));
+export const ContractsPage = lazy(() => import("../features/legal/contracts/ContractsPage").then((m) => ({ default: m.ContractsPage })));
+export const MattersPage = lazy(() => import("../features/legal/matters/MattersPage").then((m) => ({ default: m.MattersPage })));
+export const MeetingsPage = lazy(() => import("../features/company/meetings/MeetingsPage").then((m) => ({ default: m.MeetingsPage })));
+export const MeetingPage = lazy(() => import("../features/company/meetings/detail/MeetingPage").then((m) => ({ default: m.MeetingPage })));

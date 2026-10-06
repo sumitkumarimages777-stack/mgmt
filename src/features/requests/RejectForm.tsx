@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-/** Ask the sender to re-upload, with a reason that's posted as a comment. */
+/** Send a delivered request back with a reason, posted as a comment. */
 export function RejectForm({ busy, onSend, onCancel }: { busy: boolean; onSend: (reason: string) => void; onCancel: () => void }) {
   const [reason, setReason] = useState("");
   return (
