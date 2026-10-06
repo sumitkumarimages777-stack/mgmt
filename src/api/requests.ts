@@ -3,8 +3,9 @@ import { supabase } from "../lib/supabase";
 import type { DocumentRequest } from "../lib/types";
 import { keys, unwrap } from "./core";
 
-export function useRequests() {
+export function useRequests(enabled = true) {
   return useQuery({
+    enabled,
     queryKey: keys.requests,
     queryFn: () =>
       unwrap<DocumentRequest[]>(supabase.from("document_requests").select("*").order("created_at", { ascending: false })),
@@ -12,7 +13,7 @@ export function useRequests() {
 }
 
 export type RequestInput = Partial<
-  Pick<DocumentRequest, "area_id" | "title" | "description" | "filing_id" | "due_date" | "status">
+  Pick<DocumentRequest, "module" | "title" | "description" | "filing_id" | "due_date" | "status">
 >;
 
 export async function saveRequest(id: string | null, input: RequestInput) {

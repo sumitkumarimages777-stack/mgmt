@@ -1,5 +1,5 @@
 import { deleteDocument, keys, openDocument, useWrite, type useLookups } from "../../api";
-import { AreaTag, Icon } from "../../components/ui";
+import { Icon, Tag } from "../../components/ui";
 import { formatDate } from "../../lib/dates";
 import { formatBytes } from "../../lib/format";
 import type { SharedDocument } from "../../lib/types";
@@ -7,16 +7,18 @@ import { useAuth } from "../auth/AuthContext";
 
 interface Props {
   doc: SharedDocument;
-  showArea: boolean;
+  showSource: boolean;
   lookups: ReturnType<typeof useLookups>;
   onError: (e: unknown) => void;
 }
 
-export function DocumentRow({ doc, showArea, lookups, onError }: Props) {
-  const { profile, isAdmin, canEdit } = useAuth();
+const SOURCE_LABEL: Record<string, string> = { requests: "Document request", filings: "Filing", documents: "Record" };
+
+export function DocumentRow({ doc, showSource, lookups, onError }: Props) {
+  const { profile, can } = useAuth();
   const remove = useWrite((d: SharedDocument) => deleteDocument(d), [keys.documents]);
   const uploader = doc.uploaded_by ? lookups.personById.get(doc.uploaded_by) : undefined;
-  const canDelete = isAdmin || (doc.uploaded_by === profile?.id && canEdit(doc.area_id));
+  const canDelete = can(doc.perm_key, "manage") || (doc.uploaded_by === profile?.id && can(doc.perm_key, "edit"));
   const details = [doc.category, doc.file_name ?? (doc.external_url ? "Link" : null), formatBytes(doc.file_size)];
 
   const confirmDelete = () => {
@@ -30,7 +32,7 @@ export function DocumentRow({ doc, showArea, lookups, onError }: Props) {
         <div className="cell-sub">{details.filter(Boolean).join(" · ")}</div>
         {doc.description && <div className="cell-sub pre">{doc.description}</div>}
       </td>
-      {showArea && <td><AreaTag area={lookups.areaById.get(doc.area_id)} /></td>}
+      {showSource && <td><Tag>{SOURCE_LABEL[doc.feature] ?? doc.feature}</Tag></td>}
       <td>
         {lookups.personName(doc.uploaded_by)}
         {uploader?.organization && <div className="cell-sub">{uploader.organization}</div>}

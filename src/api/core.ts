@@ -10,9 +10,10 @@ export async function unwrap<T>(p: PromiseLike<{ data: T | null; error: unknown 
 
 export const keys = {
   me: ["me"] as const,
-  areas: ["areas"] as const,
   profiles: ["profiles"] as const,
-  members: ["area_members"] as const,
+  permissions: ["permissions"] as const,
+  roles: ["roles"] as const,
+  userRoles: ["user_roles"] as const,
   filings: ["filings"] as const,
   requests: ["requests"] as const,
   documents: ["documents"] as const,

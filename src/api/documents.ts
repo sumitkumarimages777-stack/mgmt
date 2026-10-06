@@ -1,10 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { DOCUMENTS_BUCKET, supabase } from "../lib/supabase";
-import type { SharedDocument } from "../lib/types";
+import type { ModuleKey, SharedDocument } from "../lib/types";
 import { keys, unwrap } from "./core";
 
-export function useDocuments() {
+export function useDocuments(enabled = true) {
   return useQuery({
+    enabled,
     queryKey: keys.documents,
     queryFn: () =>
       unwrap<SharedDocument[]>(supabase.from("documents").select("*").order("created_at", { ascending: false })),
@@ -12,7 +13,9 @@ export function useDocuments() {
 }
 
 export interface DocumentUpload {
-  area_id: string;
+  module: ModuleKey;
+  /** Which feature it belongs to — decides who can see it (permission "<module>.<feature>"). */
+  feature: string;
   title: string;
   description?: string | null;
   category?: string | null;
@@ -26,18 +29,19 @@ function safeFileName(name: string) {
   return name.normalize("NFKD").replace(/[^\w.-]+/g, "_").slice(-120) || "file";
 }
 
-/** Upload the file (if any) to private storage, then record it. Objects live under "<area_id>/". */
+/** Upload the file (if any) to private storage, then record it. Objects live under "<module>/". */
 export async function uploadDocument(input: DocumentUpload, userId: string) {
   let storage_path: string | null = null;
   if (input.file) {
-    storage_path = `${input.area_id}/${crypto.randomUUID()}-${safeFileName(input.file.name)}`;
+    storage_path = `${input.module}/${crypto.randomUUID()}-${safeFileName(input.file.name)}`;
     const { error } = await supabase.storage.from(DOCUMENTS_BUCKET).upload(storage_path, input.file, {
       contentType: input.file.type || undefined,
     });
     if (error) throw error;
   }
   const { error } = await supabase.from("documents").insert({
-    area_id: input.area_id,
+    module: input.module,
+    feature: input.feature,
     title: input.title,
     description: input.description || null,
     category: input.category || null,

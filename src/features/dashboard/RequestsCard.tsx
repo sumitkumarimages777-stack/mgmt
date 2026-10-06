@@ -8,7 +8,7 @@ export function RequestsCard({ stats, onOpen }: { stats: DashboardStats; onOpen:
   const { personName } = useLookups();
   const items = [...stats.pendingOnUs, ...stats.toReview].slice(0, 8);
   return (
-    <DashboardCard title="Document requests" link={{ to: "/requests", label: "All requests" }}>
+    <DashboardCard title="Document requests" link={{ to: "/ca/requests", label: "All requests" }}>
       {items.length === 0 ? (
         <Empty title="No open document requests" />
       ) : (

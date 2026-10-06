@@ -1,7 +1,6 @@
 // Calls to the admin-users Edge Function (needs the service-role key, so it
 // can't run in the browser).
 import { supabase } from "../lib/supabase";
-import type { AreaPermission, UserRole } from "../lib/types";
 
 async function call<T = { ok: true }>(body: Record<string, unknown>): Promise<T> {
   const { data, error } = await supabase.functions.invoke("admin-users", { body });
@@ -22,8 +21,7 @@ export interface NewPerson {
   password: string;
   full_name: string;
   organization: string | null;
-  role: UserRole;
-  access: Array<{ area_id: string; permission: AreaPermission }>;
+  role_ids: string[];
 }
 
 export const adminUsers = {

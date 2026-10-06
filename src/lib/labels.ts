@@ -1,10 +1,27 @@
-import type { FilingStatus, RequestStatus, UserRole } from "./types";
+import type { AccessLevel, FilingStatus, ModuleKey, RequestStatus } from "./types";
 
-export const ROLE_LABEL: Record<UserRole, string> = {
-  admin: "Admin",
-  staff: "Team member",
-  external: "External advisor",
+export const MODULE_LABEL: Record<ModuleKey, string> = {
+  ca: "CA & Compliance",
+  hr: "HR",
+  legal: "Legal",
 };
+
+export const ACCESS_LABEL: Record<AccessLevel, string> = {
+  own: "Own only",
+  view: "View",
+  edit: "Edit",
+  manage: "Manage",
+};
+
+export const ACCESS_HELP: Record<AccessLevel | "none", string> = {
+  none: "Can't see it",
+  own: "Only records about themselves",
+  view: "See everything, change nothing",
+  edit: "See, add and update",
+  manage: "Everything, including delete",
+};
+
+export const FILING_CATEGORIES = ["GST", "Income tax & TDS", "ROC / MCA", "Payroll", "Other"];
 
 export const FILING_STATUS_LABEL: Record<FilingStatus, string> = {
   pending: "Pending",

@@ -1,5 +1,5 @@
-export type UserRole = "admin" | "staff" | "external";
-export type AreaPermission = "view" | "edit";
+export type ModuleKey = "ca" | "hr" | "legal";
+export type AccessLevel = "own" | "view" | "edit" | "manage";
 export type FilingStatus = "pending" | "in_progress" | "filed" | "not_applicable";
 export type RequestStatus = "open" | "submitted" | "accepted" | "rejected" | "cancelled";
 
@@ -8,28 +8,42 @@ export interface Profile {
   email: string;
   full_name: string;
   organization: string | null;
-  role: UserRole;
   is_active: boolean;
   created_at: string;
 }
 
-export interface Area {
+/** One grantable feature, e.g. "ca.filings". */
+export interface PermissionDef {
+  key: string;
+  module: ModuleKey;
+  label: string;
+  description: string | null;
+  supports_own: boolean;
+  sort: number;
+}
+
+export interface Role {
   id: string;
   name: string;
   description: string | null;
-  color: string;
+  is_superuser: boolean;
   created_at: string;
 }
 
-export interface AreaMember {
-  area_id: string;
+export interface RolePermission {
+  role_id: string;
+  permission_key: string;
+  level: AccessLevel;
+}
+
+export interface UserRole {
   user_id: string;
-  permission: AreaPermission;
+  role_id: string;
 }
 
 export interface Filing {
   id: string;
-  area_id: string;
+  category: string;
   title: string;
   form_code: string | null;
   period: string;
@@ -46,7 +60,7 @@ export interface Filing {
 
 export interface DocumentRequest {
   id: string;
-  area_id: string;
+  module: ModuleKey;
   title: string;
   description: string | null;
   filing_id: string | null;
@@ -60,7 +74,9 @@ export interface DocumentRequest {
 
 export interface SharedDocument {
   id: string;
-  area_id: string;
+  module: ModuleKey;
+  feature: string;
+  perm_key: string;
   title: string;
   description: string | null;
   category: string | null;
@@ -77,7 +93,7 @@ export interface SharedDocument {
 
 export interface Comment {
   id: string;
-  area_id: string;
+  perm_key: string;
   request_id: string | null;
   filing_id: string | null;
   body: string;
@@ -87,7 +103,7 @@ export interface Comment {
 
 export interface Activity {
   id: number;
-  area_id: string | null;
+  perm_key: string | null;
   actor_id: string | null;
   entity_type: string;
   entity_id: string | null;

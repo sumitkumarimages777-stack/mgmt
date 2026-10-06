@@ -14,6 +14,6 @@ export function useComments(kind: CommentParent, id: string) {
 }
 
 export async function addComment(kind: CommentParent, parentId: string, body: string) {
-  // area_id is filled in by a database trigger from the parent item
+  // perm_key is filled in by a database trigger from the parent item
   return unwrap(supabase.from("comments").insert({ [parentColumn(kind)]: parentId, body }));
 }

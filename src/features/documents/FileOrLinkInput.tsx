@@ -19,7 +19,7 @@ export function FileOrLinkInput({ mode, onModeChange, url, onUrlChange, onFile }
         <label className="field">
           <span>File</span>
           <input className="input" type="file" onChange={(e) => onFile(e.target.files?.[0] ?? null)} />
-          <small>Max 50 MB. Stored privately — only people with access to the area can open it.</small>
+          <small>Max 50 MB. Stored privately — only people whose role allows it can open it.</small>
         </label>
       ) : (
         <label className="field">

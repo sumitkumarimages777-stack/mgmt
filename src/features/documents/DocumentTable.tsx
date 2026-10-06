@@ -4,7 +4,8 @@ import { ErrorBox } from "../../components/ui";
 import type { SharedDocument } from "../../lib/types";
 import { DocumentRow } from "./DocumentRow";
 
-export function DocumentTable({ docs, showArea = true }: { docs: SharedDocument[]; showArea?: boolean }) {
+/** `showSource` adds a column saying whether a file came in for a request, a filing, or as a record. */
+export function DocumentTable({ docs, showSource = true }: { docs: SharedDocument[]; showSource?: boolean }) {
   const lookups = useLookups();
   const [error, setError] = useState<unknown>(null);
 
@@ -17,7 +18,7 @@ export function DocumentTable({ docs, showArea = true }: { docs: SharedDocument[
           <thead>
             <tr>
               <th>Document</th>
-              {showArea && <th>Area</th>}
+              {showSource && <th>For</th>}
               <th>Shared by</th>
               <th>Date</th>
               <th />
@@ -25,7 +26,7 @@ export function DocumentTable({ docs, showArea = true }: { docs: SharedDocument[
           </thead>
           <tbody>
             {docs.map((d) => (
-              <DocumentRow key={d.id} doc={d} showArea={showArea} lookups={lookups} onError={setError} />
+              <DocumentRow key={d.id} doc={d} showSource={showSource} lookups={lookups} onError={setError} />
             ))}
           </tbody>
         </table>

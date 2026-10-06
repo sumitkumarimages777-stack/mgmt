@@ -1,6 +1,5 @@
 export * from "./activity";
 export * from "./adminUsers";
-export * from "./areas";
 export * from "./comments";
 export * from "./core";
 export * from "./documents";
@@ -8,3 +7,4 @@ export * from "./filings";
 export * from "./lookups";
 export * from "./profiles";
 export * from "./requests";
+export * from "./roles";

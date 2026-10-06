@@ -7,7 +7,7 @@ export function serviceClient(): SupabaseClient {
   });
 }
 
-/** The caller's user id if they are a signed-in, active admin; otherwise an error message + status. */
+/** The caller's user id if they are a signed-in, active user holding the Admin role; otherwise an error message + status. */
 export async function requireAdmin(
   admin: SupabaseClient,
   req: Request,
@@ -15,7 +15,10 @@ export async function requireAdmin(
   const token = req.headers.get("Authorization")?.replace(/^Bearer\s+/i, "") ?? "";
   const { data } = await admin.auth.getUser(token);
   if (!data?.user) return { error: "Not signed in", status: 401 };
-  const { data: me } = await admin.from("profiles").select("role, is_active").eq("id", data.user.id).single();
-  if (!me || me.role !== "admin" || !me.is_active) return { error: "Admins only", status: 403 };
+  const { data: me } = await admin.from("profiles").select("is_active").eq("id", data.user.id).single();
+  const { data: adminRole } = await admin
+    .from("user_roles").select("role_id, roles!inner(is_superuser)")
+    .eq("user_id", data.user.id).eq("roles.is_superuser", true).limit(1);
+  if (!me?.is_active || !adminRole?.length) return { error: "Admins only", status: 403 };
   return { userId: data.user.id };
 }

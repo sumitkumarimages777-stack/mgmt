@@ -1,28 +1,31 @@
 import { useState } from "react";
-import { AreaTag, Empty, Loading } from "../../components/ui";
 import { useActivity, useLookups } from "../../api";
+import { Empty, Loading, Tag } from "../../components/ui";
 import { formatDateTime } from "../../lib/dates";
+import { MODULE_LABEL } from "../../lib/labels";
+import type { ModuleKey } from "../../lib/types";
+import { usePermLabel } from "./usePermLabel";
 
 export function ActivityPage() {
   const [limit, setLimit] = useState(200);
   const activity = useActivity(limit);
-  const { areas, areaById, personName } = useLookups();
-  const [area, setArea] = useState("");
-
-  const rows = (activity.data ?? []).filter((a) => !area || a.area_id === area);
+  const { personName } = useLookups();
+  const permLabel = usePermLabel();
+  const [module, setModule] = useState("");
+  const rows = (activity.data ?? []).filter((a) => !module || a.perm_key?.startsWith(`${module}.`));
 
   return (
     <div className="page">
       <div className="page-head">
         <div>
           <h1>Activity</h1>
-          <p>An automatic audit trail: who added, filed, requested or shared what, and when.</p>
+          <p>An automatic audit trail: who added, filed, requested or shared what, and when. You see entries for the parts of the panel you have access to.</p>
         </div>
       </div>
       <div className="toolbar">
-        <select className="select" value={area} onChange={(e) => setArea(e.target.value)}>
-          <option value="">All areas</option>
-          {areas.map((a) => <option key={a.id} value={a.id}>{a.name}</option>)}
+        <select className="select" value={module} onChange={(e) => setModule(e.target.value)}>
+          <option value="">All departments</option>
+          {(Object.keys(MODULE_LABEL) as ModuleKey[]).map((m) => <option key={m} value={m}>{MODULE_LABEL[m]}</option>)}
         </select>
       </div>
       <div className="card">
@@ -38,7 +41,7 @@ export function ActivityPage() {
                   <th>When</th>
                   <th>Who</th>
                   <th>What</th>
-                  <th>Area</th>
+                  <th>Where</th>
                 </tr>
               </thead>
               <tbody>
@@ -47,7 +50,7 @@ export function ActivityPage() {
                     <td className="nowrap">{formatDateTime(a.created_at)}</td>
                     <td className="nowrap">{personName(a.actor_id)}</td>
                     <td>{a.summary}</td>
-                    <td>{a.area_id ? <AreaTag area={areaById.get(a.area_id)} /> : "—"}</td>
+                    <td><Tag>{permLabel(a.perm_key)}</Tag></td>
                   </tr>
                 ))}
               </tbody>

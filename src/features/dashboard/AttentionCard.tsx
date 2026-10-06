@@ -3,13 +3,13 @@ import { formatDate, relativeDue } from "../../lib/dates";
 import { DashboardCard } from "./DashboardCard";
 import type { DashboardStats } from "./useDashboardStats";
 
-export function AttentionCard({ stats, isAdmin, onOpen }: { stats: DashboardStats; isAdmin: boolean; onOpen: (id: string) => void }) {
+export function AttentionCard({ stats, canEdit, onOpen }: { stats: DashboardStats; canEdit: boolean; onOpen: (id: string) => void }) {
   const items = [...stats.overdue, ...stats.next30].slice(0, 8);
   return (
-    <DashboardCard title="Filings needing attention" link={{ to: "/filings", label: "All filings" }}>
+    <DashboardCard title="Filings needing attention" link={{ to: "/ca/filings", label: "All filings" }}>
       {items.length === 0 ? (
         <Empty title="Nothing due in the next 30 days">
-          {stats.filings.length === 0 && isAdmin && "Go to Filings to generate this year's compliance calendar."}
+          {stats.filings.length === 0 && canEdit && "Go to Filings to generate this year's compliance calendar."}
         </Empty>
       ) : (
         <ul className="list">

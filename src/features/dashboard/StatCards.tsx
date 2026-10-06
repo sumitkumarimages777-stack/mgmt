@@ -14,10 +14,10 @@ function Stat({ to, label, value, tone }: { to: string; label: string; value: nu
 export function StatCards({ stats }: { stats: DashboardStats }) {
   return (
     <div className="grid grid-4" style={{ marginBottom: 16 }}>
-      <Stat to="/filings?tab=overdue" label="Overdue filings" value={stats.overdue.length} tone={stats.overdue.length ? "red" : undefined} />
-      <Stat to="/filings?tab=upcoming" label="Due in next 30 days" value={stats.next30.length} tone={stats.next30.length ? "amber" : undefined} />
-      <Stat to="/requests" label="Documents still to send" value={stats.pendingOnUs.length} />
-      <Stat to="/filings?tab=filed" label={`Filed in ${fyLabel(stats.fy)}`} value={stats.filedThisFy.length} tone="green" />
+      <Stat to="/ca/filings?tab=overdue" label="Overdue filings" value={stats.overdue.length} tone={stats.overdue.length ? "red" : undefined} />
+      <Stat to="/ca/filings?tab=upcoming" label="Due in next 30 days" value={stats.next30.length} tone={stats.next30.length ? "amber" : undefined} />
+      <Stat to="/ca/requests" label="Documents still to send" value={stats.pendingOnUs.length} />
+      <Stat to="/ca/filings?tab=filed" label={`Filed in ${fyLabel(stats.fy)}`} value={stats.filedThisFy.length} tone="green" />
     </div>
   );
 }

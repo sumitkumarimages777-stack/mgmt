@@ -1,9 +1,9 @@
 import { NavLink } from "react-router-dom";
-import { useFilings, useRequests } from "../api";
 import { Icon, type IconName } from "../components/ui";
 import { useAuth } from "../features/auth/AuthContext";
-import { filingDueState } from "../lib/dates";
-import { ROLE_LABEL } from "../lib/labels";
+import { NAV_SECTIONS } from "./navigation";
+import { SidebarFooter } from "./SidebarFooter";
+import { useNavBadges } from "./useNavBadges";
 
 function NavItem({ to, icon, label, count }: { to: string; icon: IconName; label: string; count?: number }) {
   return (
@@ -16,11 +16,8 @@ function NavItem({ to, icon, label, count }: { to: string; icon: IconName; label
 }
 
 export function Sidebar({ open }: { open: boolean }) {
-  const { profile, isAdmin, signOut } = useAuth();
-  const filings = useFilings();
-  const requests = useRequests();
-  const overdue = (filings.data ?? []).filter((f) => filingDueState(f) === "overdue").length;
-  const toSend = (requests.data ?? []).filter((r) => r.status === "open" || r.status === "rejected").length;
+  const { isAdmin, can } = useAuth();
+  const badges = useNavBadges();
 
   return (
     <aside className={`sidebar${open ? " open" : ""}`}>
@@ -29,31 +26,28 @@ export function Sidebar({ open }: { open: boolean }) {
         Management Panel
       </div>
       <NavItem to="/" icon="home" label="Dashboard" />
-      <NavItem to="/filings" icon="calendar" label="Filings" count={overdue} />
-      <NavItem to="/requests" icon="inbox" label="Document requests" count={toSend} />
-      <NavItem to="/documents" icon="file" label="Shared documents" />
+      {NAV_SECTIONS.map((section) => {
+        const items = section.items.filter((i) => can(i.perm));
+        if (items.length === 0) return null;
+        return (
+          <div key={section.module}>
+            <div className="nav-section">{section.label}</div>
+            {items.map((i) => (
+              <NavItem key={i.to} to={i.to} icon={i.icon} label={i.label} count={i.badge && badges[i.badge]} />
+            ))}
+          </div>
+        );
+      })}
+      <div className="nav-section">General</div>
       <NavItem to="/activity" icon="activity" label="Activity" />
       {isAdmin && (
         <>
           <div className="nav-section">Admin</div>
-          <NavItem to="/admin/users" icon="users" label="People & access" />
-          <NavItem to="/admin/areas" icon="layers" label="Areas" />
+          <NavItem to="/admin/people" icon="users" label="People" />
+          <NavItem to="/admin/roles" icon="layers" label="Roles & permissions" />
         </>
       )}
-      <div className="sidebar-foot">
-        <NavLink to="/account" className="nav-link" style={{ padding: 0 }}>
-          <div style={{ minWidth: 0 }}>
-            <div className="me-name">{profile?.full_name || profile?.email}</div>
-            <div className="me-sub">
-              {profile ? ROLE_LABEL[profile.role] : ""}
-              {profile?.organization ? ` · ${profile.organization}` : ""}
-            </div>
-          </div>
-        </NavLink>
-        <button className="btn btn-sm" onClick={signOut}>
-          <Icon name="logout" size={16} /> Sign out
-        </button>
-      </div>
+      <SidebarFooter />
     </aside>
   );
 }

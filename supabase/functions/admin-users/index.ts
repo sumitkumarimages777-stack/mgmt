@@ -2,7 +2,7 @@
 //
 // Actions
 //   bootstrap     (no login)  create the very first admin; refused once an admin exists
-//   create_user   (admin)     create a login with a temporary password + area access
+//   create_user   (admin)     create a login with a temporary password + roles
 //   set_password  (admin)     reset someone's password
 //   set_email     (admin)     correct someone's login email
 //   set_active    (admin)     deactivate / reactivate a login (also blocks sign-in)

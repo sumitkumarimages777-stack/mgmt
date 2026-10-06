@@ -1,18 +1,17 @@
 import type { Session } from "@supabase/supabase-js";
 import { createContext, useContext } from "react";
-import type { AreaPermission, Profile } from "../../lib/types";
+import type { AccessLevel, Profile } from "../../lib/types";
 
 export interface AuthState {
   session: Session | null;
   loading: boolean;
   profile: Profile | null;
+  /** Holds the Admin role: everything, including people and roles. */
   isAdmin: boolean;
-  /** area_id -> permission for the signed-in user (admins have edit everywhere). */
-  permissions: Map<string, AreaPermission>;
-  canView: (areaId: string) => boolean;
-  canEdit: (areaId: string) => boolean;
-  /** Can the user edit in at least one area? */
-  canEditAny: boolean;
+  /** permission key ("ca.filings") -> effective level across all the user's roles. */
+  permissions: Map<string, AccessLevel>;
+  /** Does the user have at least `level` on `key`? */
+  can: (key: string, level?: AccessLevel) => boolean;
   signOut: () => Promise<void>;
 }
 

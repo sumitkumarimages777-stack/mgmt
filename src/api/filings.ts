@@ -3,8 +3,9 @@ import { supabase } from "../lib/supabase";
 import type { Filing } from "../lib/types";
 import { keys, unwrap } from "./core";
 
-export function useFilings() {
+export function useFilings(enabled = true) {
   return useQuery({
+    enabled,
     queryKey: keys.filings,
     queryFn: () => unwrap<Filing[]>(supabase.from("filings").select("*").order("due_date")),
   });
@@ -21,11 +22,11 @@ export async function deleteFiling(id: string) {
   return unwrap(supabase.from("filings").delete().eq("id", id));
 }
 
-/** Bulk-insert filings, skipping ones that already exist (same area + title + period). Returns how many were added. */
+/** Bulk-insert filings, skipping ones that already exist (same title + period). Returns how many were added. */
 export async function insertFilingsSkippingExisting(rows: FilingInput[]): Promise<number> {
   const { data, error } = await supabase
     .from("filings")
-    .upsert(rows, { onConflict: "area_id,title,period", ignoreDuplicates: true })
+    .upsert(rows, { onConflict: "title,period", ignoreDuplicates: true })
     .select("id");
   if (error) throw error;
   return data?.length ?? 0;

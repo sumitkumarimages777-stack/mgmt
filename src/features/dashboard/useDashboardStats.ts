@@ -1,11 +1,13 @@
 import { useDocuments, useFilings, useRequests } from "../../api";
+import { useAuth } from "../auth/AuthContext";
 import { addDays, filingDueState, fyStartYear, todayISO } from "../../lib/dates";
 
 /** Numbers and lists the dashboard shows, computed from what the user can see. */
 export function useDashboardStats() {
-  const filings = useFilings();
-  const requests = useRequests();
-  const documents = useDocuments();
+  const { can } = useAuth();
+  const filings = useFilings(can("ca.filings"));
+  const requests = useRequests(can("ca.requests"));
+  const documents = useDocuments(can("ca.documents"));
 
   const today = todayISO();
   const in30 = addDays(today, 30);

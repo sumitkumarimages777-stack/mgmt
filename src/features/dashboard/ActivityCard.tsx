@@ -1,11 +1,13 @@
 import { useActivity, useLookups } from "../../api";
-import { AreaTag, Empty } from "../../components/ui";
+import { Empty, Tag } from "../../components/ui";
 import { formatDateTime } from "../../lib/dates";
+import { usePermLabel } from "../activity/usePermLabel";
 import { DashboardCard } from "./DashboardCard";
 
 export function ActivityCard() {
   const activity = useActivity(8);
-  const { areaById, personName } = useLookups();
+  const { personName } = useLookups();
+  const permLabel = usePermLabel();
   const items = activity.data ?? [];
   return (
     <DashboardCard title="Recent activity" link={{ to: "/activity", label: "Full log" }}>
@@ -19,7 +21,7 @@ export function ActivityCard() {
                 <div>{a.summary}</div>
                 <div className="cell-sub">{personName(a.actor_id)} · {formatDateTime(a.created_at)}</div>
               </div>
-              {a.area_id && <AreaTag area={areaById.get(a.area_id)} />}
+              <Tag>{permLabel(a.perm_key)}</Tag>
             </li>
           ))}
         </ul>

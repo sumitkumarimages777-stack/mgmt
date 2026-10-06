@@ -4,10 +4,9 @@ import { checkCredentials } from "../validate.ts";
 
 /** Create the very first admin. Refused once any admin exists. */
 export async function bootstrap(admin: SupabaseClient, body: Body): Promise<Response> {
-  const { count, error: countError } = await admin
-    .from("profiles").select("id", { count: "exact", head: true }).eq("role", "admin");
-  if (countError) throw countError;
-  if (count) return json({ error: "Setup is already complete. Please sign in." }, 403);
+  const { data: needed, error: setupError } = await admin.rpc("setup_required");
+  if (setupError) throw setupError;
+  if (!needed) return json({ error: "Setup is already complete. Please sign in." }, 403);
 
   const { email, password, full_name } = body;
   const problem = checkCredentials(email, password);
@@ -20,7 +19,6 @@ export async function bootstrap(admin: SupabaseClient, body: Body): Promise<Resp
     user_metadata: { full_name: String(full_name ?? "") },
   });
   if (error) return json({ error: error.message }, 400);
-  // handle_new_user already made them admin; this just makes it explicit.
-  await admin.from("profiles").update({ role: "admin" }).eq("id", data.user.id);
-  return json({ ok: true });
+  // The handle_new_user trigger gives the first person the Admin role.
+  return json({ ok: true, user_id: data.user.id });
 }

@@ -1,21 +1,19 @@
 import { useState } from "react";
-import { useLookups } from "../../api";
 import { Empty, Loading } from "../../components/ui";
 import { formatDate, fyLabel } from "../../lib/dates";
 import { useAuth } from "../auth/AuthContext";
-import { FilingModal } from "../filings/FilingModal";
-import { RequestModal } from "../requests/RequestModal";
+import { FilingModal } from "../ca/filings/FilingModal";
+import { RequestModal } from "../ca/requests/RequestModal";
 import { ActivityCard } from "./ActivityCard";
-import { AreasCard } from "./AreasCard";
 import { AttentionCard } from "./AttentionCard";
+import { RecordsCard } from "./RecordsCard";
 import { RequestsCard } from "./RequestsCard";
 import { StatCards } from "./StatCards";
 import { useDashboardStats } from "./useDashboardStats";
 
 export function DashboardPage() {
-  const { profile, isAdmin, permissions } = useAuth();
+  const { profile, isAdmin, permissions, can } = useAuth();
   const stats = useDashboardStats();
-  const { areas } = useLookups();
   const [openFiling, setOpenFiling] = useState<string | null>(null);
   const [openRequest, setOpenRequest] = useState<string | null>(null);
 
@@ -25,7 +23,7 @@ export function DashboardPage() {
       <div className="page">
         <div className="card">
           <Empty title="Your access hasn't been set up yet">
-            Ask the admin to give you access to the areas you work on (e.g. Accounts & Tax, Legal).
+            Ask the admin to give you a role (for example CA, Lawyer or HR).
           </Empty>
         </div>
       </div>
@@ -38,15 +36,15 @@ export function DashboardPage() {
       <div className="page-head">
         <div>
           <h1>Hello{firstName ? `, ${firstName}` : ""}</h1>
-          <p>{formatDate(stats.today)} · {fyLabel(stats.fy)} · {areas.length} area{areas.length === 1 ? "" : "s"}</p>
+          <p>{formatDate(stats.today)} · {fyLabel(stats.fy)}</p>
         </div>
       </div>
-      <StatCards stats={stats} />
+      {(can("ca.filings") || can("ca.requests")) && <StatCards stats={stats} />}
       <div className="grid grid-2">
-        <AttentionCard stats={stats} isAdmin={isAdmin} onOpen={setOpenFiling} />
-        <RequestsCard stats={stats} onOpen={setOpenRequest} />
+        {can("ca.filings") && <AttentionCard stats={stats} canEdit={can("ca.filings", "edit")} onOpen={setOpenFiling} />}
+        {can("ca.requests") && <RequestsCard stats={stats} onOpen={setOpenRequest} />}
+        {can("ca.documents") && <RecordsCard />}
         <ActivityCard />
-        <AreasCard stats={stats} />
       </div>
       {openFiling && <FilingModal filingId={openFiling} onClose={() => setOpenFiling(null)} />}
       {openRequest && <RequestModal requestId={openRequest} onClose={() => setOpenRequest(null)} />}
