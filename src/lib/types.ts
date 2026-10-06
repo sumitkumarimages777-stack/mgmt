@@ -87,6 +87,7 @@ export interface SharedDocument {
   external_url: string | null;
   request_id: string | null;
   filing_id: string | null;
+  employee_id: string | null;
   uploaded_by: string | null;
   created_at: string;
 }
@@ -111,3 +112,5 @@ export interface Activity {
   summary: string;
   created_at: string;
 }
+
+export * from "./hrTypes";

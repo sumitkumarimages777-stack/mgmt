@@ -3,18 +3,20 @@ import { Icon, Tag } from "../../components/ui";
 import { formatDate } from "../../lib/dates";
 import { formatBytes } from "../../lib/format";
 import type { SharedDocument } from "../../lib/types";
+import type { ExtraColumn } from "./DocumentTable";
 import { useAuth } from "../auth/AuthContext";
 
 interface Props {
   doc: SharedDocument;
   showSource: boolean;
+  extra?: ExtraColumn;
   lookups: ReturnType<typeof useLookups>;
   onError: (e: unknown) => void;
 }
 
 const SOURCE_LABEL: Record<string, string> = { requests: "Document request", filings: "Filing", documents: "Record" };
 
-export function DocumentRow({ doc, showSource, lookups, onError }: Props) {
+export function DocumentRow({ doc, showSource, extra, lookups, onError }: Props) {
   const { profile, can } = useAuth();
   const remove = useWrite((d: SharedDocument) => deleteDocument(d), [keys.documents]);
   const uploader = doc.uploaded_by ? lookups.personById.get(doc.uploaded_by) : undefined;
@@ -32,6 +34,7 @@ export function DocumentRow({ doc, showSource, lookups, onError }: Props) {
         <div className="cell-sub">{details.filter(Boolean).join(" · ")}</div>
         {doc.description && <div className="cell-sub pre">{doc.description}</div>}
       </td>
+      {extra && <td>{extra.render(doc)}</td>}
       {showSource && <td><Tag>{SOURCE_LABEL[doc.feature] ?? doc.feature}</Tag></td>}
       <td>
         {lookups.personName(doc.uploaded_by)}

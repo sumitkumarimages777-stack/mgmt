@@ -9,3 +9,8 @@ export const ActivityPage = lazy(() => import("../features/activity/ActivityPage
 export const AccountPage = lazy(() => import("../features/account/AccountPage").then((m) => ({ default: m.AccountPage })));
 export const PeoplePage = lazy(() => import("../features/admin/people/PeoplePage").then((m) => ({ default: m.PeoplePage })));
 export const RolesPage = lazy(() => import("../features/admin/roles/RolesPage").then((m) => ({ default: m.RolesPage })));
+export const TeamPage = lazy(() => import("../features/hr/team/TeamPage").then((m) => ({ default: m.TeamPage })));
+export const EmployeePage = lazy(() => import("../features/hr/employee/EmployeePage").then((m) => ({ default: m.EmployeePage })));
+export const HrDocumentsPage = lazy(() => import("../features/hr/documents/HrDocumentsPage").then((m) => ({ default: m.HrDocumentsPage })));
+export const EquipmentPage = lazy(() => import("../features/hr/equipment/EquipmentPage").then((m) => ({ default: m.EquipmentPage })));
+export const EsopPage = lazy(() => import("../features/hr/esop/EsopPage").then((m) => ({ default: m.EsopPage })));

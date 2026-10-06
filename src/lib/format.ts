@@ -12,3 +12,16 @@ export function errorMessage(e: unknown): string {
   if (typeof e === "object" && "message" in e) return String((e as { message: unknown }).message);
   return String(e);
 }
+
+const inr = new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 0 });
+const count = new Intl.NumberFormat("en-IN");
+
+/** ₹12,00,000 */
+export function formatINR(n: number | null | undefined): string {
+  return n === null || n === undefined ? "—" : inr.format(n);
+}
+
+/** 1,00,000 */
+export function formatCount(n: number): string {
+  return count.format(n);
+}
