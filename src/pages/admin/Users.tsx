@@ -240,6 +240,7 @@ function EditPersonModal({
 }: { person: Profile; areas: Area[]; initialAccess: Access; onClose: () => void }) {
   const { profile: me } = useAuth();
   const [fullName, setFullName] = useState(person.full_name);
+  const [email, setEmail] = useState(person.email);
   const [organization, setOrganization] = useState(person.organization ?? "");
   const [role, setRole] = useState<UserRole>(person.role);
   const [access, setAccess] = useState<Access>(initialAccess);
@@ -248,6 +249,10 @@ function EditPersonModal({
   const isMe = person.id === me?.id;
 
   const save = useWrite(async () => {
+    const newEmail = email.trim().toLowerCase();
+    if (newEmail !== person.email) {
+      await adminUsers({ action: "set_email", user_id: person.id, email: newEmail });
+    }
     const { error } = await supabase
       .from("profiles")
       .update({ full_name: fullName.trim(), organization: organization.trim() || null, role })
@@ -298,14 +303,20 @@ function EditPersonModal({
           )}
           <span className="spacer" />
           <button className="btn" onClick={onClose}>Cancel</button>
-          <button className="btn btn-primary" disabled={save.isPending} onClick={() => save.mutate(undefined, { onSuccess: onClose })}>
+          <button className="btn btn-primary" disabled={save.isPending || !email.trim()} onClick={() => save.mutate(undefined, { onSuccess: onClose })}>
             {save.isPending ? "Saving…" : "Save"}
           </button>
         </>
       }
     >
       <div className="form">
-        <p className="muted" style={{ margin: 0 }}>{person.email}</p>
+        <label className="field">
+          <span>Login email</span>
+          <input className="input" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+          {email.trim().toLowerCase() !== person.email && (
+            <small>{isMe ? "You" : "They"} will sign in with the new email from now on. The password stays the same.</small>
+          )}
+        </label>
         <div className="form-row">
           <label className="field">
             <span>Name</span>

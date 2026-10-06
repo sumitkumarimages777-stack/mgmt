@@ -4,6 +4,7 @@
 //   bootstrap     (no login)  create the very first admin; refused once an admin exists
 //   create_user   (admin)     create a login with a temporary password + area access
 //   set_password  (admin)     reset someone's password
+//   set_email     (admin)     correct someone's login email
 //   set_active    (admin)     deactivate / reactivate a login (also blocks sign-in)
 import { createClient } from "npm:@supabase/supabase-js@2";
 
@@ -23,8 +24,14 @@ function json(body: unknown, status = 200) {
 const ROLES = ["admin", "staff", "external"];
 const PERMISSIONS = ["view", "edit"];
 
+function checkEmail(email: unknown): string | null {
+  if (typeof email !== "string" || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) return "A valid email is required";
+  return null;
+}
+
 function checkCredentials(email: unknown, password: unknown): string | null {
-  if (typeof email !== "string" || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return "A valid email is required";
+  const emailProblem = checkEmail(email);
+  if (emailProblem) return emailProblem;
   if (typeof password !== "string" || password.length < 8) return "Password must be at least 8 characters";
   return null;
 }
@@ -127,6 +134,19 @@ Deno.serve(async (req) => {
         }
         const { error } = await admin.auth.admin.updateUserById(user_id, { password });
         if (error) return json({ error: error.message }, 400);
+        return json({ ok: true });
+      }
+
+      case "set_email": {
+        const { user_id, email } = body;
+        if (typeof user_id !== "string") return json({ error: "user_id is required" }, 400);
+        const problem = checkEmail(email);
+        if (problem) return json({ error: problem }, 400);
+        const newEmail = (email as string).trim().toLowerCase();
+        const { error } = await admin.auth.admin.updateUserById(user_id, { email: newEmail, email_confirm: true });
+        if (error) return json({ error: error.message }, 400);
+        const { error: profileError } = await admin.from("profiles").update({ email: newEmail }).eq("id", user_id);
+        if (profileError) throw profileError;
         return json({ ok: true });
       }
 
