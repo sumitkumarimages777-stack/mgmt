@@ -1,0 +1,7 @@
+# Only the bits that matter for deploys from the CLI.
+project_id = "hietxqbfpjbbavupspvd"
+
+[functions.admin-users]
+# The function checks the caller itself (admin-only, plus the one-time
+# bootstrap that runs before anyone can sign in).
+verify_jwt = false
