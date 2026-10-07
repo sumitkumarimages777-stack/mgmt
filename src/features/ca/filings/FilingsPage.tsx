@@ -1,13 +1,15 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useFilings } from "../../../api";
 import { Empty, Icon, Loading, Tabs } from "../../../components/ui";
 import { FILING_CATEGORIES } from "../../../lib/labels";
 import { useAuth } from "../../auth/AuthContext";
+import { BulkDeleteBar } from "./BulkDeleteBar";
 import { FilingModal } from "./FilingModal";
 import { FilingsTable } from "./FilingsTable";
 import { GenerateCalendarModal } from "./generate/GenerateCalendarModal";
 import { useFilingGroups, type FilingTab } from "./useFilingGroups";
+import { useRowSelection } from "./useRowSelection";
 
 export function FilingsPage() {
   const { can } = useAuth();
@@ -21,6 +23,8 @@ export function FilingsPage() {
   const [generating, setGenerating] = useState(false);
   const groups = useFilingGroups(filings.data, category, q);
   const rows = groups[tab];
+  const selection = useRowSelection(useMemo(() => rows.map((f) => f.id), [rows]));
+  const canDelete = can("ca.filings", "manage");
   const noneAtAll = (filings.data ?? []).length === 0;
 
   return (
@@ -70,7 +74,10 @@ export function FilingsPage() {
             {noneAtAll && can("ca.filings", "edit") && "Use “Generate compliance calendar” to add a full year of GST, TDS, ROC and payroll deadlines."}
           </Empty>
         ) : (
-          <FilingsTable rows={rows} showFiled={tab === "filed"} onOpen={setOpen} />
+          <>
+            {canDelete && <BulkDeleteBar selection={selection} />}
+            <FilingsTable rows={rows} showFiled={tab === "filed"} onOpen={setOpen} selection={canDelete ? selection : undefined} />
+          </>
         )}
       </div>
 

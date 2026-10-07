@@ -22,6 +22,12 @@ export async function deleteFiling(id: string) {
   return unwrap(supabase.from("filings").delete().eq("id", id));
 }
 
+/** Delete several filings in one call. RLS still decides which rows the caller may delete. */
+export async function deleteFilings(ids: string[]) {
+  if (ids.length === 0) return;
+  await unwrap(supabase.from("filings").delete().in("id", ids));
+}
+
 /** Bulk-insert filings, skipping ones that already exist (same title + period). Returns how many were added. */
 export async function insertFilingsSkippingExisting(rows: FilingInput[]): Promise<number> {
   const { data, error } = await supabase

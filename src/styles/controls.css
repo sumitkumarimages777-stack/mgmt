@@ -38,3 +38,11 @@
 .tab { border: 0; background: transparent; padding: 6px 12px; border-radius: 7px; cursor: pointer; color: var(--muted); font-weight: 550; }
 .tab.active { background: var(--surface); color: var(--text); box-shadow: var(--shadow); }
 .tab .count { margin-left: 6px; color: var(--faint); font-size: 12px; }
+
+.bulk-bar {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 8px 14px;
+  border-bottom: 1px solid var(--border); background: var(--primary-soft);
+}
+.bulk-bar .alert { flex-basis: 100%; margin: 0; }
+th.select-col, td.select-col { width: 1%; padding-right: 0; }
+.select-col input { width: 16px; height: 16px; accent-color: var(--primary); cursor: pointer; }
