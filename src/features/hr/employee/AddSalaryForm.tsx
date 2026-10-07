@@ -8,7 +8,7 @@ export function AddSalaryForm({ employeeId, onDone }: { employeeId: string; onDo
   const [ctc, setCtc] = useState("");
   const [gross, setGross] = useState("");
   const [notes, setNotes] = useState("");
-  const save = useWrite((input: SalaryInput) => addSalaryRevision(input), [keys.salaries(employeeId)]);
+  const save = useWrite((input: SalaryInput) => addSalaryRevision(input), [keys.allSalaries]);
   const valid = !!effective && Number(ctc) > 0;
 
   const submit = () =>

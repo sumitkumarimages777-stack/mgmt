@@ -6,7 +6,7 @@ import { Layout } from "./Layout";
 import {
   AccountPage, ActivityPage, AllRequestsPage, ContractsPage, DashboardPage, EmployeePage, EquipmentPage, EsopPage,
   FilingsPage, HrDocumentsPage, HrRequestsPage, LegalRequestsPage, MattersPage, MeetingPage, MeetingsPage, PeoplePage,
-  RecordsPage, RequestsPage, RolesPage, TeamPage,
+  RecordsPage, RequestsPage, RolesPage, SalariesPage, TdsPage, TdsRulesPage, TeamPage,
 } from "./pages";
 import { RequirePerm } from "./RequirePerm";
 
@@ -41,10 +41,13 @@ export function App() {
       <Route element={<Layout />}>
         <Route index element={<DashboardPage />} />
         <Route path="ca/filings" element={<RequirePerm perm="ca.filings"><FilingsPage /></RequirePerm>} />
+        <Route path="ca/tds" element={<RequirePerm perm="ca.tds"><TdsPage /></RequirePerm>} />
+        <Route path="ca/tds-rules" element={<RequirePerm perm="ca.tds_rules"><TdsRulesPage /></RequirePerm>} />
         <Route path="ca/requests" element={<RequirePerm perm="ca.requests"><RequestsPage /></RequirePerm>} />
         <Route path="ca/records" element={<RequirePerm perm="ca.documents"><RecordsPage /></RequirePerm>} />
         <Route path="hr/team" element={<RequirePerm perm="hr.team" min="own"><TeamPage /></RequirePerm>} />
         <Route path="hr/team/:id" element={<RequirePerm perm="hr.team" min="own"><EmployeePage /></RequirePerm>} />
+        <Route path="hr/salaries" element={<RequirePerm perm="hr.compensation"><SalariesPage /></RequirePerm>} />
         <Route path="hr/documents" element={<RequirePerm perm="hr.documents"><HrDocumentsPage /></RequirePerm>} />
         <Route path="hr/equipment" element={<RequirePerm perm="hr.equipment"><EquipmentPage /></RequirePerm>} />
         <Route path="hr/esop" element={<RequirePerm perm="hr.esop"><EsopPage /></RequirePerm>} />

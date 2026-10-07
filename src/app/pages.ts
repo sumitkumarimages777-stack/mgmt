@@ -21,3 +21,6 @@ export const ContractsPage = lazy(() => import("../features/legal/contracts/Cont
 export const MattersPage = lazy(() => import("../features/legal/matters/MattersPage").then((m) => ({ default: m.MattersPage })));
 export const MeetingsPage = lazy(() => import("../features/company/meetings/MeetingsPage").then((m) => ({ default: m.MeetingsPage })));
 export const MeetingPage = lazy(() => import("../features/company/meetings/detail/MeetingPage").then((m) => ({ default: m.MeetingPage })));
+export const TdsPage = lazy(() => import("../features/ca/tds/TdsPage").then((m) => ({ default: m.TdsPage })));
+export const TdsRulesPage = lazy(() => import("../features/ca/tdsRules/TdsRulesPage").then((m) => ({ default: m.TdsRulesPage })));
+export const SalariesPage = lazy(() => import("../features/hr/salaries/SalariesPage").then((m) => ({ default: m.SalariesPage })));

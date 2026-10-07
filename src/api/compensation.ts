@@ -27,6 +27,15 @@ export function useSalaryRevisions(employeeId: string, enabled = true) {
   });
 }
 
+/** Every salary revision the caller may see, newest first (for the team salary list). */
+export function useAllSalaryRevisions(enabled = true) {
+  return useQuery({
+    queryKey: [...keys.allSalaries, "all"],
+    enabled,
+    queryFn: () => unwrap<SalaryRevision[]>(supabase.from("salary_revisions").select("*").order("effective_from", { ascending: false })),
+  });
+}
+
 export type SalaryInput = Pick<SalaryRevision, "employee_id" | "effective_from" | "annual_ctc" | "monthly_gross" | "notes">;
 
 export async function addSalaryRevision(input: SalaryInput) {

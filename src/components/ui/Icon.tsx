@@ -13,6 +13,8 @@ const PATHS = {
   laptop: <><rect x="4" y="5" width="16" height="11" rx="1.5" /><path d="M2 19h20" /></>,
   chart: <><path d="M4 20V10M10 20V4M16 20v-8M22 20H2" /></>,
   scale: <><path d="M12 4v16M5 20h14M4 8h16" /><path d="m4 8-2.5 6a3 3 0 0 0 5 0zM20 8l-2.5 6a3 3 0 0 0 5 0z" /></>,
+  receipt: <><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z" /><path d="M9 8h6M9 12h6" /></>,
+  wallet: <><rect x="3" y="6" width="18" height="14" rx="2" /><path d="M3 10h18M16 15h2" /><path d="M6 6V5a1 1 0 0 1 1-1h10" /></>,
   x: <path d="M6 6l12 12M18 6 6 18" />,
   menu: <path d="M4 7h16M4 12h16M4 17h16" />,
   download: <><path d="M12 4v11M7 10l5 5 5-5" /><path d="M5 20h14" /></>,

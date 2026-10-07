@@ -40,3 +40,10 @@ tr.clickable:hover td { background: var(--surface-2); }
 
 .empty { padding: 36px 18px; text-align: center; color: var(--muted); }
 .empty strong { display: block; color: var(--text); margin-bottom: 4px; }
+
+/* ---------- TDS ---------- */
+.tds-summary { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; margin-bottom: 14px; }
+.tds-summary h2 { min-width: 92px; text-align: center; }
+.tds-missing { display: flex; align-items: center; gap: 12px; justify-content: space-between; flex-wrap: wrap; margin-bottom: 14px; }
+.plain-fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
+.text-red { color: var(--red); }

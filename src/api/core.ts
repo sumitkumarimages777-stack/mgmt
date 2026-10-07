@@ -29,6 +29,11 @@ export const keys = {
   meetingParts: (meetingId: string) => ["meeting_parts", meetingId] as const,
   payroll: (employeeId: string) => ["payroll", employeeId] as const,
   salaries: (employeeId: string) => ["salaries", employeeId] as const,
+  /** Prefix of every salary query, including the all-team list. */
+  allSalaries: ["salaries"] as const,
+  tdsRules: ["tds_rules"] as const,
+  tdsPayments: ["tds_payments"] as const,
+  tdsSnapshot: (month: string) => ["tds_snapshot", month] as const,
   comments: (kind: CommentParent, id: string) => ["comments", kind, id] as const,
 };
 

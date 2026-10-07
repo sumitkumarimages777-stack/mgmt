@@ -48,10 +48,13 @@ src/
     auth/               AuthContext (useAuth, can), AuthProvider, LoginPage
     dashboard/          page + one file per card + useDashboardStats
     ca/filings/         page, table, form, modal, details/, generate/, compliance calendar logic + tests
+    ca/tds/             monthly TDS register + past months; eligibility, due dates (tdsLogic.ts + tests)
+    ca/tdsRules/        TDS rules (salary above a threshold → section) and who they pick up this month
     ca/requests/        CA document requests page (uses the shared requests board)
     ca/records/         CA documents page
     hr/team/            team list + employee form (JobFields, PersonalFields)
     hr/employee/        employee page with tabs: overview, salary & payroll, documents, equipment, ESOPs
+    hr/salaries/        current salary of every team member; add missing ones (hr.compensation)
     hr/equipment/       asset register, give / return equipment
     hr/esop/            grants, vesting maths (vesting.ts + tests), ESOP overview
     hr/documents/       all HR documents by team member

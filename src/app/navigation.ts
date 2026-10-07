@@ -25,7 +25,9 @@ export const NAV_SECTIONS: NavSection[] = [
     module: "ca",
     label: MODULE_LABEL.ca,
     items: [
-      { to: "/ca/filings", icon: "calendar", label: "Filings", perm: "ca.filings", badge: "overdueFilings" },
+      { to: "/ca/filings", icon: "calendar", label: "Filings calendar", perm: "ca.filings", badge: "overdueFilings" },
+      { to: "/ca/tds", icon: "receipt", label: "TDS", perm: "ca.tds" },
+      { to: "/ca/tds-rules", icon: "scale", label: "TDS rules", perm: "ca.tds_rules" },
       { to: "/ca/requests", icon: "inbox", label: "Document requests", perm: "ca.requests", badge: "requestsToSend" },
       { to: "/ca/records", icon: "file", label: "Records", perm: "ca.documents" },
     ],
@@ -35,6 +37,7 @@ export const NAV_SECTIONS: NavSection[] = [
     label: MODULE_LABEL.hr,
     items: [
       { to: "/hr/team", icon: "users", label: "Team members", perm: "hr.team", min: "own" },
+      { to: "/hr/salaries", icon: "wallet", label: "Salaries", perm: "hr.compensation" },
       { to: "/hr/documents", icon: "file", label: "Contracts & documents", perm: "hr.documents" },
       { to: "/hr/equipment", icon: "laptop", label: "Equipment", perm: "hr.equipment" },
       { to: "/hr/esop", icon: "chart", label: "ESOPs", perm: "hr.esop" },

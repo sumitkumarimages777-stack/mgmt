@@ -31,7 +31,7 @@ export function FilingsPage() {
     <div className="page">
       <div className="page-head">
         <div>
-          <h1>Filings</h1>
+          <h1>Filings calendar</h1>
           <p>Statutory filings and compliance deadlines — what's coming up, what's late and what's done.</p>
         </div>
         <div className="actions">

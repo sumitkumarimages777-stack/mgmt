@@ -122,3 +122,4 @@ export interface Activity {
 export * from "./hrTypes";
 export * from "./legalTypes";
 export * from "./meetingTypes";
+export * from "./tdsTypes";
